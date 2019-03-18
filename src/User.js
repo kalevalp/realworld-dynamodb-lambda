@@ -2,6 +2,7 @@ const Util = require('./Util');
 const usersTable = Util.getTableName('users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const uuidv4 = require('uuid/v4');
 
 /**
  * @module User
@@ -38,6 +39,10 @@ module.exports = {
       return Util.envelop(`Email already taken: [${newUser.email}]`, 422);
     }
 
+      if (!newUser.uuid) {
+	  newUser.uuid = uuidv4();
+      }
+      
     // Add new entry to usersTable
     const encryptedPassword = bcrypt.hashSync(newUser.password, 5);
     await Util.DocumentClient.put({
@@ -45,7 +50,8 @@ module.exports = {
       Item: {
         username: newUser.username,
         email: newUser.email,
-        password: encryptedPassword,
+          password: encryptedPassword,
+	  uuid: newUser.uuid,
       },
     }).promise();
 
@@ -53,7 +59,8 @@ module.exports = {
       user: {
         email: newUser.email,
         token: mintToken(newUser.username),
-        username: newUser.username,
+          username: newUser.username,
+	  uuid: newUser.uuid,
         bio: '',
         image: '',
       }

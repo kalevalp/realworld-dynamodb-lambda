@@ -1,13 +1,56 @@
 const recorder = require('watchtower-recorder');
 
+const Util = require('./Util');
+const usersTable = Util.getTableName('users');
+
 // Loading modules that fail when required via vm2
 const aws      = require('aws-sdk');
 const jws      = require('jws');
 
-const cipherTableName = process.env.CIPHERS_TABLE;
-
 const mock = {
-    'aws-sdk' : aws,
+    // './Util' : Util,
+    'aws-sdk' : new Proxy(aws,{
+	get: function(obj, prop) {
+            if (prop === "DynamoDB")
+		return new Proxy(obj[prop],{
+		    get: function(obj, prop) {
+			if (prop === "DocumentClient")
+			    return new Proxy(obj[prop],{
+				construct: function (target, args) {
+ 			    	    return new Proxy(new target(...args), {
+					get: function(obj, prop) {
+					    if (prop == 'get')
+						return new Proxy(obj[prop],{
+						    apply: function(target, thisArg, argumentsList) {
+							if (argumentsList[0].TableName === usersTable)
+							    return target.apply(thisArg, argumentsList)
+							    .on('success', function(response) {
+								if (response.data && response.data.Item && response.data.Item.uuid)
+								    console.log(`#####EVENTUPDATE[PROCESSING_DATA(${response.data.Item.uuid})]#####`);
+								else
+								    console.log(`#####EVENTUPDATE[PROCESSING_NO_ID()]#####`);
+							    });
+							else
+							    return target.apply(thisArg, argumentsList);
+						    },					    
+						});
+					    else 
+						return obj[prop];
+					}
+				    });
+				},
+
+				
+				
+
+			    });
+			else
+			    return obj[prop];
+		    }});
+	    else
+		return obj[prop];
+	}}),
+    
     'jws'     : jws,
 };
 
