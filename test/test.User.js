@@ -152,19 +152,20 @@ describe('User', async () => {
 
     // TODO: Add User.getProfile edge cases
 
-    it('should follow/unfollow user', async () => {
+    const followed_user = {
+      username: `followed_user-${TestUtil.randomString()}`,
+      email: `followed_user-${TestUtil.randomString()}@mail.com`,
+      password: 'password',
+    };
 
+    it('should follow/unfollow user', async () => {
       // Create user who can be followed
       await axios.post(`/users`, {
-        user: {
-          username: 'followed_user',
-          email: 'followed_user@mail.com',
-          password: 'password',
-        }
+        user: followed_user
       });
       const followedProfile = (await axios({
         method: 'POST',
-        url: `/profiles/followed_user/follow`,
+        url: `/profiles/${followed_user.username}/follow`,
         headers: { 'Authorization': `Token ${loggedInUser.token}` },
       })).data.profile;
       (followedProfile); // TODO: Assert on this
@@ -172,12 +173,12 @@ describe('User', async () => {
       // Following a user again should have no effect
       await axios({
         method: 'POST',
-        url: `/profiles/followed_user/follow`,
+        url: `/profiles/${followed_user.username}/follow`,
         headers: { 'Authorization': `Token ${loggedInUser.token}` },
       });
       const retrievedFollowedProfile = (await axios({
         method: 'GET',
-        url: `/profiles/followed_user`,
+        url: `/profiles/${followed_user.username}`,
         headers: { 'Authorization': `Token ${loggedInUser.token}` },
       })).data.profile;
       (retrievedFollowedProfile); // TODO: Assert on this
@@ -185,7 +186,7 @@ describe('User', async () => {
       // Get followed profile without authentication
       const retrievedFollowedProfileNoAuth = (await axios({
         method: 'GET',
-        url: `/profiles/followed_user`,
+        url: `/profiles/${followed_user.username}`,
       })).data.profile;
       (retrievedFollowedProfileNoAuth); // TODO: Assert on this
 
@@ -204,28 +205,28 @@ describe('User', async () => {
       })).data.user;
       const secondFollowedProfile = (await axios({
         method: 'POST',
-        url: `/profiles/followed_user/follow`,
+        url: `/profiles/${followed_user.username}/follow`,
         headers: { 'Authorization': `Token ${secondFollowerUser.token}` },
       })).data.profile;
       (secondFollowedProfile); // TODO: Assert on this
 
       const unfollowedProfile = (await axios({
         method: 'DELETE',
-        url: `/profiles/followed_user/follow`,
+        url: `/profiles/${followed_user.username}/follow`,
         headers: { 'Authorization': `Token ${loggedInUser.token}` },
       })).data.profile;
       (unfollowedProfile); // TODO: Assert on this
 
       const reUnfollowedProfile = (await axios({
         method: 'DELETE',
-        url: `/profiles/followed_user/follow`,
+        url: `/profiles/${followed_user.username}/follow`,
         headers: { 'Authorization': `Token ${loggedInUser.token}` },
       })).data.profile;
       (reUnfollowedProfile); // TODO: Assert on this
 
       const secondUnfollowedProfile = (await axios({
         method: 'DELETE',
-        url: `/profiles/followed_user/follow`,
+        url: `/profiles/${followed_user.username}/follow`,
         headers: { 'Authorization': `Token ${secondFollowerUser.token}` },
       })).data.profile;
       (secondUnfollowedProfile); // TODO: Assert on this
@@ -236,7 +237,7 @@ describe('User', async () => {
     it('should disallow following with bad token', async () => {
       await axios({
         method: 'POST',
-        url: `/profiles/followed_user/follow`,
+        url: `/profiles/${followed_user.username}/follow`,
       }).catch(res =>
         TestUtil.assertError(res, /Token not present or invalid/));
     });

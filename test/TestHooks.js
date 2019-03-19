@@ -8,8 +8,8 @@ before(async () => {
   console.log(`Testing API_URL: [${API_URL}]`);
   axios.defaults.baseURL = API_URL;
 
-  process.stdout.write('Purging data... ');
-  await axios.delete(`/__TESTUTILS__/purge`);
+  // process.stdout.write('Purging data... ');
+  // await axios.delete(`/__TESTUTILS__/purge`);
   console.log('Done!\n');
 
   // Debounce if running against 'serverless offline'
