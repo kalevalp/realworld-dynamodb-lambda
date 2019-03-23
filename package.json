@@ -25,6 +25,7 @@
     "axios": "^0.18.0",
     "cloudwatch-log-scraper": "^1.1.0",
     "eslint": "^5.2.0",
+    "lorem-ipsum": "^2.0.0",
     "mocha": "^5.0.4",
     "node-jre": "^0.2.3",
     "nyc": "^12.0.2",

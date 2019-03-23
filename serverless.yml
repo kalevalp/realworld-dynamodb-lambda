@@ -285,9 +285,7 @@ resources:
           -
             AttributeName: username
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST 
         TableName: realworld-${self:provider.environment.DYNAMODB_NAMESPACE}-users
         GlobalSecondaryIndexes:
           -
@@ -298,9 +296,6 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 1
-              WriteCapacityUnits: 1
 
     ArticlesDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -319,9 +314,7 @@ resources:
           -
             AttributeName: slug
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST 
         TableName: realworld-${self:provider.environment.DYNAMODB_NAMESPACE}-articles
         GlobalSecondaryIndexes:
           -
@@ -335,9 +328,6 @@ resources:
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 1
-              WriteCapacityUnits: 1
 
     CommentsDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -353,9 +343,7 @@ resources:
           -
             AttributeName: id
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST 
         TableName: realworld-${self:provider.environment.DYNAMODB_NAMESPACE}-comments
         GlobalSecondaryIndexes:
           -
@@ -366,9 +354,6 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 1
-              WriteCapacityUnits: 1
 
     GDPRConsentDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -381,9 +366,7 @@ resources:
           -
             AttributeName: uuid
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST 
         TableName: realworld-${self:provider.environment.DYNAMODB_NAMESPACE}-gdpr-consent
 
     ########################################

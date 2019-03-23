@@ -2,6 +2,19 @@ const TestUtil = require('./TestUtil');
 const assert = require('assert');
 const axios = require('axios');
 
+const { LoremIpsum } = require("lorem-ipsum");
+
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 12,
+    min: 4
+  },
+  wordsPerSentence: {
+    max: 20,
+    min: 8
+  }
+});
+
 const globals = {
   authorUser: null,
   authoressUser: null,
@@ -30,9 +43,9 @@ describe('Article', async () => {
       globals.createdArticleWithoutTags =
         (await axios.post(`/articles`, {
           article: {
-            title: 'title',
-            description: 'description',
-            body: 'body'
+            title: lorem.generateSentences(1),
+            description: lorem.generateParagraphs(1),
+            body: lorem.generateParagraphs(12)
           },
         }, {
           headers: { Authorization: `Token ${globals.authorUser.token}` },
@@ -45,9 +58,9 @@ describe('Article', async () => {
       globals.createdArticleWithTags =
         (await axios.post(`/articles`, {
           article: {
-            title: 'title',
-            description: 'description',
-            body: 'body',
+            title: lorem.generateSentences(1),
+            description: lorem.generateParagraphs(1),
+            body: lorem.generateParagraphs(12),
             tagList: ['tag_a', 'tag_b'],
           },
         }, {
@@ -147,13 +160,15 @@ describe('Article', async () => {
         })).data.article;
       assert.equal(updatedArticle.description, 'newdescription');
 
+      const newbody = lorem.generateParagraphs(12) ;
+	
       updatedArticle = (await axios.put(
         `/articles/${globals.createdArticleWithTags.slug}`, {
-          article: { body: 'newbody' },
+          article: { body: newbody},
         }, {
           headers: { Authorization: `Token ${globals.authorUser.token}` },
         })).data.article;
-      assert.equal(updatedArticle.body, 'newbody');
+      assert.equal(updatedArticle.body, newbody);
 
     });
 
@@ -291,9 +306,9 @@ describe('Article', async () => {
       for (let i = 0; i < 20; ++i) {
         globals.listArticles.push((await axios.post(`/articles`, {
           article: {
-            title: 'title',
-            description: 'description',
-            body: 'body',
+            title: lorem.generateSentences(1),
+            description: lorem.generateParagraphs(1),
+            body: lorem.generateParagraphs(12),
             tagList: [
               TestUtil.randomString(),
               `tag_${i}`,
