@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     'comma-spacing': 'error',
     'eol-last': 'error',
-    'max-len': ['error', 80],
+    // 'max-len': ['error', 80],
     'no-console': 'off',
     'no-multi-spaces': 'error',
     'no-trailing-spaces': 'error',
