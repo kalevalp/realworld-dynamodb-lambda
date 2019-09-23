@@ -205,6 +205,137 @@ const properties = [
             }
         }
     },
+    {
+        name: 'tests-vi',
+        quantifiedVariables: ['article-slug'],
+        projections: [['article-slug']],
+        stateMachine: {
+            'PUBLISHED': {
+                params: ['article-slug'],
+                'INITIAL': {
+                    to: 'published'
+                },
+            },
+            'LISTED': {
+                params: ['article-slug'],
+                'INITIAL': {
+                    to: 'FAILURE'
+                },
+                'published': {
+                    to: 'SUCCESS'
+                },
+            },
+            'DELETED': {
+                params: ['article-slug'],
+                'published': {
+                    to: 'INITIAL'
+                },
+            },
+        },
+    },
+    // This is an interesting example for the chain properties thing.
+    {
+        name: 'tests-vii',
+        quantifiedVariables: ['article-slug', 'author-uuid', 'user-uuid'],
+        projections: [['article-slug', 'author-uuid', 'user-uuid'], ['article-slug', 'author-uuid']],
+        stateMachine: {
+            'PUBLISHED': {
+                params: ['article-slug', 'author-uuid'],
+                'INITIAL': { to: 'published' },
+                'followed': { to: 'published_and_followed' },
+            },
+            'DELETED': {
+                params: ['article-slug'],
+                'published': { to: 'INITIAL' },
+                'published_and_followed': { to: 'followed' },
+            },
+            'FOLLOWED': {
+                params: ['user-uuid', 'author-uuid'],
+                'INITIAL': {to: 'followed'},
+                'published': {to: 'published_and_followed'},
+            },
+            'UNFOLLOWED': {
+                params: ['user-uuid', 'author-uuid'],
+                'followed': {to: 'INITIAL'},
+                'published_and_followed': {to: 'published'},
+            },
+            'IN_FEED': { // The author id is actually not really necessary here.
+                         // Can do without it, need it for the property condition.
+                params: ['article-slug', 'author-uuid', 'user-uuid'],
+                'INITIAL': { to: 'FAILURE' },
+                'published': { to: 'FAILURE' },
+                'followed': {to: 'FAILURE'},
+                'published_and_followed': {to: 'SUCCESS'},
+
+            },
+        },
+    },
+    {
+        name: 'tests-viii',
+        quantifiedVariables: ['article-slug', 'comment-uuid', 'user-uuid'],
+        projections: [['article-slug', 'comment-uuid', 'user-uuid'], ['article-slug'], ['user-uuid']],
+        stateMachine: {
+            'PUBLISHED': {
+                params: ['article-slug'],
+                'INITIAL': { to: 'published' },
+                'logged-in' : { to: 'published-and-logged-in' },
+            },
+            'DELETED': {
+                params: ['article-slug'],
+                'published': { to: 'INITIAL' },
+                'published-and-logged-in' : { to: 'logged-in' },
+            },
+            'LOGGED_IN': {
+                params: ['user-uuid'],
+                'INITIAL' : { to: 'logged-in' },
+                'published': { to: 'published-and-logged-in' },
+            },
+            'LOGGED_OUT': {
+                params: ['user-uuid'],
+                'logged-in' : { to: 'INITIAL' },
+                'published-and-logged-in': { to: 'published' },
+            },
+            'COMMENTED': {
+                params: ['article-slug', 'user-uuid', 'comment-uuid'],
+                'INITIAL': { to: 'FAILURE' },
+                'logged-in': { to: 'FAILURE' },
+                'published': { to: 'FAILURE' },
+                'published-and-logged-in': { to: 'SUCCESS' },
+            },
+        },
+    },
+    {
+        name: 'tests-ix',
+        quantifiedVariables: ['article-slug', 'comment-uuid'],
+        projections: [['article-slug', 'comment-uuid'], ['article-slug']],
+        stateMachine: {
+            'PUBLISHED': {
+                params: ['article-slug'],
+                'INITIAL': { to: 'published' },
+            },
+            'DELETED': {
+                params: ['article-slug'],
+                'published': { to: 'INITIAL' },
+            },
+            'COMMENTED': {
+                params: ['article-slug', 'comment-uuid'],
+                'INITIAL': { to: 'FAILURE' },
+                'published': { to: 'commented' },
+            },
+            'DELETED_COMMENT': {
+                params: ['article-slug', 'comment-uuid'],
+                'INITIAL': { to: 'FAILURE' },
+                'commented': { to: 'published' },
+                // 'published': { to: 'FAILURE' },
+            },
+            'RETRIEVED_COMMENT': {
+                params: ['article-slug', 'comment-uuid'],
+                'INITIAL': 'FAILURE',
+                'published': 'FAILURE',
+                'commented': 'SUCCESS',
+            }
+        },
+    },
 ];
 
 module.exports = properties;
