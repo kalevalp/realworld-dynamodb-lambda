@@ -1,4 +1,4 @@
-
+// TODO - Change the create article properties to work with author username instead of uuid + change the login event to match (i.e., username instead of uuid).
 const properties = [
     // Property:
     //   GDPR Article 7 - Processing of data must occur only after consent was given
@@ -41,23 +41,23 @@ const properties = [
     },
     {
         name: 'tests-i',
-        quantifiedVariables: ['article-id', 'user-uuid'],
-        projections: [['user-uuid'], ['article-id', 'user-uuid']],
+        quantifiedVariables: ['article-slug', 'author-uuid'],
+        projections: [['author-uuid'], ['article-slug', 'author-uuid']],
         stateMachine: {
             'LOGGED_IN': {
-                params: ['user-uuid'],
+                params: ['author-uuid'],
                 'INITIAL' : {
                     to: 'logged-in'
                 },
             },
             'LOGGED_OUT': {
-                params: ['user-uuid'],
+                params: ['author-uuid'],
                 'logged-in' : {
                     to: 'INITIAL'
                 },
             },
             'PUBLISHED_ARTICLE': {
-                params: ['article-id', 'user-uuid'],
+                params: ['article-slug', 'author-uuid'],
                 'INITIAL' : {
                     to: 'FAILURE'
                 },
@@ -97,11 +97,11 @@ const properties = [
     },
     {
         name: 'tests-iii',
-        quantifiedVariables: ['article-slug', 'user-uuid'],
-        projections: [['article-slug', 'user-uuid'], ['user-uuid']],
+        quantifiedVariables: ['article-slug', 'author-uuid'],
+        projections: [['article-slug', 'author-uuid'], ['author-uuid']],
         stateMachine: {
             'LOGGED_IN': {
-                params: ['user-uuid'],
+                params: ['author-uuid'],
                 'INITIAL' : {
                     to: 'logged-in'
                 },
@@ -110,7 +110,7 @@ const properties = [
                 }
             },
             'LOGGED_OUT': {
-                params: ['user-uuid'],
+                params: ['author-uuid'],
                 'logged-in' : {
                     to: 'INITIAL'
                 },
@@ -119,7 +119,7 @@ const properties = [
                 }
             },
             'PUBLISHED_ARTICLE': {
-                params: ['article-slug', 'user-uuid'],
+                params: ['article-slug', 'author-uuid'],
                 'INITIAL': {
                     to: 'FAILURE'
                 },
@@ -128,7 +128,7 @@ const properties = [
                 }
             },
             'DELETED_ARTICLE': {
-                params: ['article-slug', 'user-uuid'],
+                params: ['article-slug', 'author-uuid'],
                 'published' : {
                     to: 'deleted'
                 },
@@ -171,7 +171,7 @@ const properties = [
                 }
             },
             'PUBLISHED_ARTICLE': {
-                params: ['article-slug', 'user-uuid'],
+                params: ['article-slug'],
                 'INITIAL': {
                     to: 'published'
                 },
@@ -180,7 +180,7 @@ const properties = [
                 }
             },
             'DELETED_ARTICLE': {
-                params: ['article-slug', 'user-uuid'],
+                params: ['article-slug'],
                 'published-logged-in' : {
                     to: 'logged-in'
                 },
@@ -210,7 +210,7 @@ const properties = [
         quantifiedVariables: ['article-slug'],
         projections: [['article-slug']],
         stateMachine: {
-            'PUBLISHED': {
+            'PUBLISHED_ARTICLE': {
                 params: ['article-slug'],
                 'INITIAL': {
                     to: 'published'
@@ -225,7 +225,7 @@ const properties = [
                     to: 'SUCCESS'
                 },
             },
-            'DELETED': {
+            'DELETED_ARTICLE': {
                 params: ['article-slug'],
                 'published': {
                     to: 'INITIAL'
@@ -239,12 +239,12 @@ const properties = [
         quantifiedVariables: ['article-slug', 'author-uuid', 'user-uuid'],
         projections: [['article-slug', 'author-uuid', 'user-uuid'], ['article-slug', 'author-uuid']],
         stateMachine: {
-            'PUBLISHED': {
+            'PUBLISHED_ARTICLE': {
                 params: ['article-slug', 'author-uuid'],
                 'INITIAL': { to: 'published' },
                 'followed': { to: 'published_and_followed' },
             },
-            'DELETED': {
+            'DELETED_ARTICLE': {
                 params: ['article-slug'],
                 'published': { to: 'INITIAL' },
                 'published_and_followed': { to: 'followed' },
@@ -260,7 +260,7 @@ const properties = [
                 'published_and_followed': {to: 'published'},
             },
             'IN_FEED': { // The author id is actually not really necessary here.
-                         // Can do without it, need it for the property condition.
+                // Can do without it, need it for the property condition.
                 params: ['article-slug', 'author-uuid', 'user-uuid'],
                 'INITIAL': { to: 'FAILURE' },
                 'published': { to: 'FAILURE' },
@@ -275,12 +275,12 @@ const properties = [
         quantifiedVariables: ['article-slug', 'comment-uuid', 'user-uuid'],
         projections: [['article-slug', 'comment-uuid', 'user-uuid'], ['article-slug'], ['user-uuid']],
         stateMachine: {
-            'PUBLISHED': {
+            'PUBLISHED_ARTICLE': {
                 params: ['article-slug'],
                 'INITIAL': { to: 'published' },
                 'logged-in' : { to: 'published-and-logged-in' },
             },
-            'DELETED': {
+            'DELETED_ARTICLE': {
                 params: ['article-slug'],
                 'published': { to: 'INITIAL' },
                 'published-and-logged-in' : { to: 'logged-in' },
@@ -309,11 +309,11 @@ const properties = [
         quantifiedVariables: ['article-slug', 'comment-uuid'],
         projections: [['article-slug', 'comment-uuid'], ['article-slug']],
         stateMachine: {
-            'PUBLISHED': {
+            'PUBLISHED_ARTICLE': {
                 params: ['article-slug'],
                 'INITIAL': { to: 'published' },
             },
-            'DELETED': {
+            'DELETED_ARTICLE': {
                 params: ['article-slug'],
                 'published': { to: 'INITIAL' },
             },
@@ -339,3 +339,28 @@ const properties = [
 ];
 
 module.exports = properties;
+
+// const eventTypes = {
+//     'PUBLISHED_ARTICLE': { params: ['article-slug', 'author-uuid']},
+//     'DELETED_ARTICLE': { params: ['article-slug', 'author-uuid'] },
+//     'RETRIEVED_ARTICLE': { params: ['article-slug'] },
+//
+//     'COMMENTED': { params: ['article-slug', 'user-uuid', 'comment-uuid'] },
+//     'DELETED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
+//     'RETRIEVED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
+//
+//     'FAVED': { params: ['article-slug', 'user-uuid'] },
+//
+//     'FOLLOWED': {params: ['user-uuid', 'author-uuid'] },
+//     'UNFOLLOWED': {params: ['user-uuid', 'author-uuid'] },
+//
+//     'GOT_CONSENT': { params: [ 'uuid' ] },
+//     'REVOKED_CONSENT': { params: [ 'uuid' ] },
+//     'PROCESSING_DATA': { params: [ 'uuid' ] },
+//
+//     'IN_FEED': { params: ['article-slug', 'author-uuid', 'user-uuid'] },
+//     'LISTED': { params: ['article-slug'] },
+//
+//     'LOGGED_IN': { params: ['user-uuid'] },
+//     'LOGGED_OUT': { params: ['user-uuid']},
+// };
