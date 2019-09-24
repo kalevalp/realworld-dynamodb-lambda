@@ -345,9 +345,9 @@ module.exports = properties;
 // [V]  'DELETED_ARTICLE': { params: ['article-slug', 'author-uuid'] },
 // [V]  'RETRIEVED_ARTICLE': { params: ['article-slug'] },
 
-// [ ]  'COMMENTED': { params: ['article-slug', 'user-uuid', 'comment-uuid'] },
-// [ ]  'DELETED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
-// [ ]  'RETRIEVED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
+// [V]  'COMMENTED': { params: ['article-slug', 'user-uuid', 'comment-uuid'] },
+// [V]  'DELETED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
+// [V]  'RETRIEVED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
 
 // [V]  'FAVED': { params: ['article-slug', 'user-uuid'] },
 
