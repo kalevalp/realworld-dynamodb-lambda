@@ -358,8 +358,8 @@ module.exports = properties;
 // [V]  'REVOKED_CONSENT': { params: [ 'uuid' ] },
 // [V]  'PROCESSING_DATA': { params: [ 'uuid' ] },
 
-// [ ]  'IN_FEED': { params: ['article-slug', 'author-uuid', 'user-uuid'] },
-// [ ]  'LISTED': { params: ['article-slug'] },
+// [V]  'IN_FEED': { params: ['article-slug', 'author-uuid', 'user-uuid'] },
+// [V]  'LISTED': { params: ['article-slug'] },
 
 // [ ]  'LOGGED_IN': { params: ['user-uuid'] },
 // [ ]  'LOGGED_OUT': { params: ['user-uuid']},

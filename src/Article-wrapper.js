@@ -14,6 +14,7 @@ function updateContext(name) {
 }
 
 let workingArticle;
+let workingUser;
 
 const mock = {
     // './Util' : Util,
@@ -33,6 +34,17 @@ const mock = {
                                                         if (argumentsList[0].TableName === usersTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
+                                                                    if (context === 'getFeed') {
+                                                                        workingUser = response.data.Item;
+                                                                    }
+                                                                    if (response.data && response.data.Item && response.data.Item.uuid)
+                                                                        console.log(`#####EVENTUPDATE[PROCESSING_DATA(${response.data.Item.uuid})]#####`);
+                                                                    else
+                                                                        console.log(`#####EVENTUPDATE[PROCESSING_NO_ID()]#####`);
+                                                                });
+                                                        if (argumentsList[0].TableName === articlesTable)
+                                                            return target.apply(thisArg, argumentsList)
+                                                                .on('success', function (response) {
                                                                     if (context === 'favorite' || context === 'delete') {
                                                                         workingArticle = response.data.Item;
                                                                     }
@@ -40,10 +52,6 @@ const mock = {
                                                                         if (response.data && response.data.Item && response.data.Item.slug)
                                                                             console.log(`#####EVENTUPDATE[RETRIEVED_ARTICLE(${response.data.Item.slug})]#####`);
                                                                     }
-                                                                    if (response.data && response.data.Item && response.data.Item.uuid)
-                                                                        console.log(`#####EVENTUPDATE[PROCESSING_DATA(${response.data.Item.uuid})]#####`);
-                                                                    else
-                                                                        console.log(`#####EVENTUPDATE[PROCESSING_NO_ID()]#####`);
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -90,6 +98,25 @@ const mock = {
                                                     },
                                                 });
 
+                                            }
+                                            else if (prop === 'query' && context in ['getFeed', 'list']) {
+                                                return new Proxy(obj[prop], {
+                                                    apply: function (target, thisArg, argumentsList) {
+                                                        if (argumentsList[0].TableName === articlesTable)
+                                                            return target.apply(thisArg, argumentsList)
+                                                                .on('success', function (response) {
+                                                                    for (const article of response.data.Items) {
+                                                                        if (context === 'getFeed') {
+                                                                            console.log(`#####EVENTUPDATE[IN_FEED(${article.slug}, ${article.author}, ${workingUser.username})]#####`);
+                                                                        } else { // context === 'list'
+                                                                            console.log(`#####EVENTUPDATE[LISTED(${article.slug}]#####`);
+                                                                        }
+                                                                    }
+                                                                });
+                                                        else
+                                                            return target.apply(thisArg, argumentsList);
+                                                    },
+                                                });
                                             }
                                             else
                                                 return obj[prop];
