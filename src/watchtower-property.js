@@ -351,8 +351,8 @@ module.exports = properties;
 
 // [V]  'FAVED': { params: ['article-slug', 'user-uuid'] },
 
-// [ ]  'FOLLOWED': {params: ['user-uuid', 'author-uuid'] },
-// [ ]  'UNFOLLOWED': {params: ['user-uuid', 'author-uuid'] },
+// [V]  'FOLLOWED': {params: ['user-uuid', 'author-uuid'] },
+// [V]  'UNFOLLOWED': {params: ['user-uuid', 'author-uuid'] },
 
 // [V]  'GOT_CONSENT': { params: [ 'uuid' ] },
 // [V]  'REVOKED_CONSENT': { params: [ 'uuid' ] },
@@ -361,6 +361,6 @@ module.exports = properties;
 // [V]  'IN_FEED': { params: ['article-slug', 'author-uuid', 'user-uuid'] },
 // [V]  'LISTED': { params: ['article-slug'] },
 
-// [ ]  'LOGGED_IN': { params: ['user-uuid'] },
-// [ ]  'LOGGED_OUT': { params: ['user-uuid']},
+// [V]  'LOGGED_IN': { params: ['user-uuid'] },
+// [-]  'LOGGED_OUT': { params: ['user-uuid']},
 // };
