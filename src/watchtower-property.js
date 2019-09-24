@@ -341,26 +341,26 @@ const properties = [
 module.exports = properties;
 
 // const eventTypes = {
-//     'PUBLISHED_ARTICLE': { params: ['article-slug', 'author-uuid']},
-//     'DELETED_ARTICLE': { params: ['article-slug', 'author-uuid'] },
-//     'RETRIEVED_ARTICLE': { params: ['article-slug'] },
-//
-//     'COMMENTED': { params: ['article-slug', 'user-uuid', 'comment-uuid'] },
-//     'DELETED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
-//     'RETRIEVED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
-//
-//     'FAVED': { params: ['article-slug', 'user-uuid'] },
-//
-//     'FOLLOWED': {params: ['user-uuid', 'author-uuid'] },
-//     'UNFOLLOWED': {params: ['user-uuid', 'author-uuid'] },
-//
-//     'GOT_CONSENT': { params: [ 'uuid' ] },
-//     'REVOKED_CONSENT': { params: [ 'uuid' ] },
-//     'PROCESSING_DATA': { params: [ 'uuid' ] },
-//
-//     'IN_FEED': { params: ['article-slug', 'author-uuid', 'user-uuid'] },
-//     'LISTED': { params: ['article-slug'] },
-//
-//     'LOGGED_IN': { params: ['user-uuid'] },
-//     'LOGGED_OUT': { params: ['user-uuid']},
+// [V]  'PUBLISHED_ARTICLE': { params: ['article-slug', 'author-uuid']},
+// [V]  'DELETED_ARTICLE': { params: ['article-slug', 'author-uuid'] },
+// [V]  'RETRIEVED_ARTICLE': { params: ['article-slug'] },
+
+// [ ]  'COMMENTED': { params: ['article-slug', 'user-uuid', 'comment-uuid'] },
+// [ ]  'DELETED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
+// [ ]  'RETRIEVED_COMMENT': { params: ['article-slug', 'comment-uuid'] },
+
+// [V]  'FAVED': { params: ['article-slug', 'user-uuid'] },
+
+// [ ]  'FOLLOWED': {params: ['user-uuid', 'author-uuid'] },
+// [ ]  'UNFOLLOWED': {params: ['user-uuid', 'author-uuid'] },
+
+// [ ]  'GOT_CONSENT': { params: [ 'uuid' ] },
+// [ ]  'REVOKED_CONSENT': { params: [ 'uuid' ] },
+// [ ]  'PROCESSING_DATA': { params: [ 'uuid' ] },
+
+// [ ]  'IN_FEED': { params: ['article-slug', 'author-uuid', 'user-uuid'] },
+// [ ]  'LISTED': { params: ['article-slug'] },
+
+// [ ]  'LOGGED_IN': { params: ['user-uuid'] },
+// [ ]  'LOGGED_OUT': { params: ['user-uuid']},
 // };

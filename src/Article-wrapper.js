@@ -33,8 +33,12 @@ const mock = {
                                                         if (argumentsList[0].TableName === usersTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
-                                                                    if (context === 'favorite') {
+                                                                    if (context === 'favorite' || context === 'delete') {
                                                                         workingArticle = response.data.Item;
+                                                                    }
+                                                                    if (context === 'get') {
+                                                                        if (response.data && response.data.Item && response.data.Item.slug)
+                                                                            console.log(`#####EVENTUPDATE[RETRIEVED_ARTICLE(${response.data.Item.slug})]#####`);
                                                                     }
                                                                     if (response.data && response.data.Item && response.data.Item.uuid)
                                                                         console.log(`#####EVENTUPDATE[PROCESSING_DATA(${response.data.Item.uuid})]#####`);
@@ -73,6 +77,20 @@ const mock = {
                                                     },
                                                 });
                                             // else if (prop === 'put' && context === 'update')
+                                            else if (prop === 'delete' && context === 'update') {
+                                                return new Proxy(obj[prop], {
+                                                    apply: function (target, thisArg, argumentsList) {
+                                                        if (argumentsList[0].TableName === articlesTable)
+                                                            return target.apply(thisArg, argumentsList)
+                                                                .on('success', function () {
+                                                                        console.log(`#####EVENTUPDATE[DELETED_ARTICLE(${argumentsList[0].Key}, ${workingArticle.author})]#####`);
+                                                                });
+                                                        else
+                                                            return target.apply(thisArg, argumentsList);
+                                                    },
+                                                });
+
+                                            }
                                             else
                                                 return obj[prop];
                                         }
