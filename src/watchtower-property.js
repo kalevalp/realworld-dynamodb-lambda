@@ -354,9 +354,9 @@ module.exports = properties;
 // [ ]  'FOLLOWED': {params: ['user-uuid', 'author-uuid'] },
 // [ ]  'UNFOLLOWED': {params: ['user-uuid', 'author-uuid'] },
 
-// [ ]  'GOT_CONSENT': { params: [ 'uuid' ] },
-// [ ]  'REVOKED_CONSENT': { params: [ 'uuid' ] },
-// [ ]  'PROCESSING_DATA': { params: [ 'uuid' ] },
+// [V]  'GOT_CONSENT': { params: [ 'uuid' ] },
+// [V]  'REVOKED_CONSENT': { params: [ 'uuid' ] },
+// [V]  'PROCESSING_DATA': { params: [ 'uuid' ] },
 
 // [ ]  'IN_FEED': { params: ['article-slug', 'author-uuid', 'user-uuid'] },
 // [ ]  'LISTED': { params: ['article-slug'] },
