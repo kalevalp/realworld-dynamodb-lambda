@@ -9,6 +9,11 @@ const commentsTable = Util.getTableName('comments');
 
 let workingComment;
 
+let context;
+function updateContext(name) {
+    context = name;
+}
+
 const mock = {
     'aws-sdk' : new Proxy(aws, {
         get: function (obj, prop) {
@@ -88,6 +93,6 @@ const mock = {
     'jws'     : jws,
 };
 
-module.exports.create = recorder.createRecordingHandler('src/Comment.js', 'create', mock);
-module.exports.get = recorder.createRecordingHandler('src/Comment.js', 'get', mock);
-module.exports.delete = recorder.createRecordingHandler('src/Comment.js', 'delete', mock);
+module.exports.create = recorder.createRecordingHandler('src/Comment.js', 'create', mock, false, updateContext);
+module.exports.get = recorder.createRecordingHandler('src/Comment.js', 'get', mock, false, updateContext);
+module.exports.delete = recorder.createRecordingHandler('src/Comment.js', 'delete', mock, false, updateContext);
