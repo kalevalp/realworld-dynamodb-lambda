@@ -30,7 +30,7 @@ const globals = {
 };
 
 describe('Scenario', async () => {
-    
+
     before(async () => {
 	globals.authorUsers = await Promise.all(
 	    Array
@@ -38,14 +38,14 @@ describe('Scenario', async () => {
 		.map(() =>
 		     TestUtil.createTestUser(
 			 `author-${TestUtil.randomString()}`)));
-	
+
 	globals.commenterUsers = await Promise.all(
 	    Array
 		.from(Array(scenarioParams.commenterCount))
-		.map(() =>	    
+		.map(() =>
 		     TestUtil.createTestUser(
 			 `commenter-${TestUtil.randomString()}`)))
-	
+
 	globals.readerUsers = await Promise.all(
 	    Array
 		.from(Array(scenarioParams.readerCount))
@@ -69,8 +69,8 @@ describe('Scenario', async () => {
 							          headers: { Authorization: `Token ${author.token}` },
 						              })))).map(response => response.data.article);
 	});
-        
-        
+
+
         it('create article with tags', async () => {
 	    globals.createdArticles.push(...(await Promise.all(globals
 						               .authorUsers.concat(globals.authorUsers)
@@ -89,7 +89,7 @@ describe('Scenario', async () => {
     });
 
     describe('Get', async () => {
-        for (i = 0; i < 5; i++) {          
+        for (i = 0; i < 5; i++) {
             it('get articles by slug', async () => {
                 for (i = 0; i < 5; i++) {
                     await Promise.all(globals
@@ -107,7 +107,7 @@ describe('Scenario', async () => {
             const allUsers = globals.authorUsers
                   .concat(globals.commenterUsers)
                   .concat(globals.readerUsers)
-            
+
             for (user of allUsers) {
                 await Promise.all(globals.createdArticles.map(article => axios.post(`/articles/` +
                                                                   `${article.slug}/favorite`, {}, {
@@ -126,18 +126,18 @@ describe('Scenario', async () => {
         });
     });
 
-    describe('List', async () => {        
+    describe('List', async () => {
         for (i = 0; i < 20; i++) {
             it('list articles', async () => {
                 await axios.get(`/articles`);
             });
         }
     });
-        
+
     describe('Follow', async () => {
         it('follow authors', async () => {
-            await Promise.all(globals.readerUsers.map(reader => 
-                                                      Promise.all(globals.authorUsers.map(author => 
+            await Promise.all(globals.readerUsers.map(reader =>
+                                                      Promise.all(globals.authorUsers.map(author =>
                                                                                           axios({
                                                                                               method: 'POST',
                                                                                               url: `/profiles/${author.username}/follow`,
@@ -146,10 +146,10 @@ describe('Scenario', async () => {
                                                                  )))
         });
     });
-    
-    describe('Feed', async () => {        
-        it('get feed', async () => {           
-            await Promise.all(globals.readerUsers.map(user => 
+
+    describe('Feed', async () => {
+        it('get feed', async () => {
+            await Promise.all(globals.readerUsers.map(user =>
                                                       axios.get(`/articles/feed`, {
                                                           headers: { Authorization: `Token ${user.token}` },
                                                       })))
@@ -157,10 +157,10 @@ describe('Scenario', async () => {
     });
 
     describe('Comment', async () => {
-        it('create comments', async () => {
-            for (commenter of globals.commenterUsers) {
-                for (article of globals.createdArticles) {
-                    for (let i = 0; i < 4; ++i) {
+        for (let i = 0; i < 4; ++i) {
+	    it('create comments', async () => {
+		for (commenter of globals.commenterUsers) {
+                    for (article of globals.createdArticles) {
                         globals.createdComments.push((await axios.post(
                             `/articles/${article.slug}/comments`, {
                                 comment: {
@@ -172,17 +172,17 @@ describe('Scenario', async () => {
                     }
                 }
             }
-        });
+              )};
     });
-    
+
 
     describe('Delete', async () => {
-        
+
         // Delete all of the articles by one of the authors
         it('delete articles', async () => {
             const author = globals.authorUsers[0];
             const articles = globals.createdArticles.filter(article => article.author.username === author.username);
-            
+
             await Promise.all(articles.map(article => axios.delete(
                 `/articles/${article.slug}`,
                 { headers: { Authorization: `Token ${author.token}` } },

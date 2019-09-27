@@ -10,7 +10,10 @@ const uuidv4 = require('uuid/v4');
 module.exports = {
 
   /** Create user */
-  async create(event) {
+    async create(event) {
+	console.log("************");
+	console.log(event);
+	console.log("************");
     const body = JSON.parse(event.body);
 
     if (!body.user) {

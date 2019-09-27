@@ -29,7 +29,7 @@
     "mocha": "^5.0.4",
     "node-jre": "^0.2.3",
     "nyc": "^12.0.2",
-    "serverless": "^1.26.1",
+    "serverless": "^1.53.0",
     "serverless-dynamodb-local": "0.2.35",
     "serverless-offline": "^3.25.6",
     "showdown": "^1.8.6"
@@ -42,7 +42,7 @@
     "watchtower-log-ingestion": "^1.4.0",
     "watchtower-monitor": "^1.1.1",
     "watchtower-property-utils": "^1.0.0",
-    "watchtower-recorder": "^1.2.0"
+    "watchtower-recorder": "^1.3.3"
   },
   "optionalDependencies": {
     "coveralls": "^3.0.0",
