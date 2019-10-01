@@ -1,24 +1,66 @@
 const log_scraper = require('cloudwatch-log-scraper');
+const fs = require('fs');
 
 const scraper = new log_scraper.LogScraper('eu-west-1');
 
-async function main() {
+function getRandFname() {
+    const fiveDigitID = Math.floor(Math.random() * Math.floor(99999));
+    return `runResults-${fiveDigitID}`;
+}
 
+async function main() {
     const lgs = await scraper.getAllLogGroups();
     const realworldLogs = lgs.filter(item => item.match(/realworld-dev-/));
 
+    function getFunctionName(lg) {
+        const functionNameRE = /\/aws\/lambda\/realworld-dev-(.*)/;
+        return lg.match(functionNameRE)[1];
+    }
+    
+    function getRunAnalysis(logEvent) {
+
+	const runReportRE = /REPORT RequestId: [0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\tDuration: ([0-9]*\.[0-9]*) ms/;
+        const initReportRE = /Init Duration: ([0-9]*\.[0-9]*) ms/;
+        
+        res = {
+            runTime: logEvent.match(runReportRE)[1],
+        };
+        
+        if (logEvent.match(initReportRE)) {
+            res.isInit = true;
+            res.initTime = logEvent.match(initReportRE)[1];
+        } else {
+            res.isInit = false;
+        }
+
+        return res;
+    }
+    
+    const runResults = [];
+
     for (const logGroup of realworldLogs) {
+        const fname = getFunctionName(logGroup);
 	const logElements = await scraper.getAllLogItemsForGroup(logGroup);
 	const reportLog = logElements.filter(x => x.message.match(/REPORT RequestId:/));
-	const runReportRE = /REPORT RequestId: ([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})\tDuration: ([0-9]*\.[0-9]*) ms/;
 
 	for (const logEvent of reportLog) {
-	    const x = logEvent.message.match(runReportRE);
-	    console.log(x[2]);
+	    const runAnalysis = getRunAnalysis(logEvent.message);
+            runAnalysis.fname = fname;
+            runResults.push(runAnalysis);
+            
+//          const invocationReport = `${fname}, ${runAnalysis.runTime}, ${runAnalysis.isInit}`.concat(runAnalysis.isInit ? `, ${runAnalysis.initTime}` : '');
+            
+//	    console.log(invocationReport);
 	}
     }
+    
+    let outputfname = getRandFname();
 
+    if (process.argv[2]) {
+        outputfname = process.argv[2];
+    } 
 
+    fs.writeFileSync(outputfname, JSON.stringify(runResults));
 
     // for (const violation of violationLog) {
     //     const violationDetails = violation.message.match(violatingInvocationRE)[1]
@@ -31,3 +73,6 @@ async function main() {
 }
 
 main();
+
+
+//console.log(process.argv);

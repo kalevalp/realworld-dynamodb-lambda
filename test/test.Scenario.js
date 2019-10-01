@@ -158,8 +158,8 @@ describe('Scenario', async () => {
 
     describe('Comment', async () => {
         for (let i = 0; i < 4; ++i) {
-	    it('create comments', async () => {
-		for (commenter of globals.commenterUsers) {
+            it('create comments', async () => {
+        	for (commenter of globals.commenterUsers) {
                     for (article of globals.createdArticles) {
                         globals.createdComments.push((await axios.post(
                             `/articles/${article.slug}/comments`, {
