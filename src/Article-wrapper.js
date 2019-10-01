@@ -57,20 +57,19 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList);
                                                     },
                                                 });
-                                            else if (prop === 'put' && context === 'create')
+                                            else if (prop === 'put' && context === 'create') {
                                                 return new Proxy(obj[prop], {
                                                     apply: function (target, thisArg, argumentsList) {
-                                                        if (argumentsList[0].TableName === articlesTable)
+                                                        if (argumentsList[0].TableName === articlesTable) {
                                                             return target.apply(thisArg, argumentsList)
-                                                                .on('success', function (response) {
-                                                                    if (response.data && response.data.Item && response.data.Item.slug)
-                                                                        console.log(`#####EVENTUPDATE[PUBLISHED_ARTICLE(${response.data.Item.slug},${response.data.Item.author})]#####`);
-                                                                });
-                                                        else
+                                                            .on('success', function (response) {
+                                                                console.log(`#####EVENTUPDATE[PUBLISHED_ARTICLE(${argumentsList[0].Item.slug},${argumentsList[0].Item.author})]#####`);
+                                                            });
+                                                        } else
                                                             return target.apply(thisArg, argumentsList);
                                                     },
                                                 });
-                                            else if (prop === 'put' && context === 'favorite')
+                                            } else if (prop === 'put' && context === 'favorite')
                                                 return new Proxy(obj[prop], {
                                                     apply: function (target, thisArg, argumentsList) {
                                                         if (argumentsList[0].TableName === articlesTable &&
@@ -84,14 +83,13 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList);
                                                     },
                                                 });
-                                            // else if (prop === 'put' && context === 'update')
-                                            else if (prop === 'delete' && context === 'update') {
+                                            else if (prop === 'delete') {
                                                 return new Proxy(obj[prop], {
                                                     apply: function (target, thisArg, argumentsList) {
                                                         if (argumentsList[0].TableName === articlesTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                        console.log(`#####EVENTUPDATE[DELETED_ARTICLE(${argumentsList[0].Key}, ${workingArticle.author})]#####`);
+                                                                        console.log(`#####EVENTUPDATE[DELETED_ARTICLE(${argumentsList[0].Key.slug}, ${workingArticle.author})]#####`);
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -99,7 +97,7 @@ const mock = {
                                                 });
 
                                             }
-                                            else if (prop === 'query' && context in ['getFeed', 'list']) {
+                                            else if (prop === 'query' && ['getFeed', 'list'].includes(context)) {
                                                 return new Proxy(obj[prop], {
                                                     apply: function (target, thisArg, argumentsList) {
                                                         if (argumentsList[0].TableName === articlesTable)
@@ -109,7 +107,7 @@ const mock = {
                                                                         if (context === 'getFeed') {
                                                                             console.log(`#####EVENTUPDATE[IN_FEED(${article.slug}, ${article.author}, ${workingUser.username})]#####`);
                                                                         } else { // context === 'list'
-                                                                            console.log(`#####EVENTUPDATE[LISTED(${article.slug}]#####`);
+                                                                            console.log(`#####EVENTUPDATE[LISTED(${article.slug})]#####`);
                                                                         }
                                                                     }
                                                                 });
@@ -118,6 +116,7 @@ const mock = {
                                                     },
                                                 });
                                             }
+                                                
                                             else
                                                 return obj[prop];
                                         }
