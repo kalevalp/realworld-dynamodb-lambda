@@ -1,4 +1,7 @@
 const recorder = require('watchtower-recorder');
+const eventStreamName = "eventStreamName";
+const eventPublisher = recorder.createEventPublisher(eventStreamName);
+
 
 const Util = require('./Util');
 const usersTable = Util.getTableName('users');
@@ -9,8 +12,12 @@ const aws = require('aws-sdk');
 const jws = require('jws');
 
 let context;
-function updateContext(name) {
+let lambdaExecutionContext;
+let lambdaInputEvent;
+function updateContext(name, event, lambdaContext) {
     context = name;
+    lambdaExecutionContext = lambdaContext;
+    lambdaInputEvent = event;
 }
 
 let workingArticle;
@@ -38,9 +45,9 @@ const mock = {
                                                                         workingUser = response.data.Item;
                                                                     }
                                                                     if (response.data && response.data.Item && response.data.Item.uuid)
-                                                                        console.log(`#####EVENTUPDATE[PROCESSING_DATA(${response.data.Item.uuid})]#####`);
+                                                                        eventPublisher({name: "PROCESSING_DATA", params: {user_id: response.data.Item.uuid}});
                                                                     else
-                                                                        console.log(`#####EVENTUPDATE[PROCESSING_NO_ID()]#####`);
+                                                                        eventPublisher({name: "PROCESSING_NO_ID", params: {}});
                                                                 });
                                                         if (argumentsList[0].TableName === articlesTable)
                                                             return target.apply(thisArg, argumentsList)
@@ -50,7 +57,7 @@ const mock = {
                                                                     }
                                                                     if (context === 'get') {
                                                                         if (response.data && response.data.Item && response.data.Item.slug)
-                                                                            console.log(`#####EVENTUPDATE[RETRIEVED_ARTICLE(${response.data.Item.slug})]#####`);
+                                                                            eventPublisher({name: "RETRIEVED_ARTICLE", params: {article_title: response.data.Item.slug}});
                                                                     }
                                                                 });
                                                         else
@@ -63,7 +70,7 @@ const mock = {
                                                         if (argumentsList[0].TableName === articlesTable) {
                                                             return target.apply(thisArg, argumentsList)
                                                             .on('success', function (response) {
-                                                                console.log(`#####EVENTUPDATE[PUBLISHED_ARTICLE(${argumentsList[0].Item.slug},${argumentsList[0].Item.author})]#####`);
+                                                                eventPublisher({name: "PUBLISHED_ARTICLE", params: {article_title: argumentsList[0].Item.slug, author: argumentsList[0].Item.author}});
                                                             });
                                                         } else
                                                             return target.apply(thisArg, argumentsList);
@@ -77,7 +84,7 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
                                                                     if (response.data && response.data.Item && response.data.Item.slug)
-                                                                        console.log(`#####EVENTUPDATE[FAVED(${response.data.Item.slug},${workingArticle.favoritedBy ? argumentsList.Item.favoritedBy.find(item => !workingArticle.favoritedBy.includes(item)) : response.data.Item.favoritedBy[0]})]#####`);
+                                                                        eventPublisher({name: "FAVED", params: {article_title: response.data.Item.slug, user: workingArticle.favoritedBy ? argumentsList.Item.favoritedBy.find(item => !workingArticle.favoritedBy.includes(item)) : response.data.Item.favoritedBy[0]}});
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -89,13 +96,12 @@ const mock = {
                                                         if (argumentsList[0].TableName === articlesTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                        console.log(`#####EVENTUPDATE[DELETED_ARTICLE(${argumentsList[0].Key.slug}, ${workingArticle.author})]#####`);
+                                                                    eventPublisher({name: "DELETED_ARTICLE", params: {article_title: argumentsList[0].Key.slug, user: workingArticle.author}});
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
                                                     },
                                                 });
-
                                             }
                                             else if (prop === 'query' && ['getFeed', 'list'].includes(context)) {
                                                 return new Proxy(obj[prop], {
@@ -105,9 +111,9 @@ const mock = {
                                                                 .on('success', function (response) {
                                                                     for (const article of response.data.Items) {
                                                                         if (context === 'getFeed') {
-                                                                            console.log(`#####EVENTUPDATE[IN_FEED(${article.slug}, ${article.author}, ${workingUser.username})]#####`);
+                                                                            eventPublisher({name: "IN_FEED", params: {article_title: article.slug, author: article.author, user: workingUser.username}});
                                                                         } else { // context === 'list'
-                                                                            console.log(`#####EVENTUPDATE[LISTED(${article.slug})]#####`);
+                                                                            eventPublisher({name: "LISTED", params: {article_title: article.slug}});
                                                                         }
                                                                     }
                                                                 });
@@ -116,7 +122,6 @@ const mock = {
                                                     },
                                                 });
                                             }
-                                                
                                             else
                                                 return obj[prop];
                                         }
