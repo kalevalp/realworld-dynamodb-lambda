@@ -1,6 +1,6 @@
 const recorder = require('watchtower-recorder');
-const eventStreamName = "eventStreamName";
-const eventPublisher = recorder.createEventPublisher(eventStreamName);
+const eventsStreamName = process.env['WATCHTOWER_EVENT_KINESIS_STREAM'];
+const eventPublisher = recorder.createEventPublisher(eventsStreamName);
 
 
 const Util = require('./Util');
@@ -57,7 +57,7 @@ const mock = {
                                                                     }
                                                                     if (context === 'get') {
                                                                         if (response.data && response.data.Item && response.data.Item.slug)
-                                                                            eventPublisher({name: "RETRIEVED_ARTICLE", params: {article_title: response.data.Item.slug}});
+                                                                            eventPublisher({name: "RETRIEVED_ARTICLE", params: {article_slug: response.data.Item.slug}});
                                                                     }
                                                                 });
                                                         else
@@ -70,7 +70,8 @@ const mock = {
                                                         if (argumentsList[0].TableName === articlesTable) {
                                                             return target.apply(thisArg, argumentsList)
                                                             .on('success', function (response) {
-                                                                eventPublisher({name: "PUBLISHED_ARTICLE", params: {article_title: argumentsList[0].Item.slug, author: argumentsList[0].Item.author}});
+                                                                eventPublisher({name: "PUBLISHED_ARTICLE", params: {article_slug: argumentsList[0].Item.slug,
+														    author_uuid: argumentsList[0].Item.author}});
                                                             });
                                                         } else
                                                             return target.apply(thisArg, argumentsList);
@@ -84,7 +85,8 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
                                                                     if (response.data && response.data.Item && response.data.Item.slug)
-                                                                        eventPublisher({name: "FAVED", params: {article_title: response.data.Item.slug, user: workingArticle.favoritedBy ? argumentsList.Item.favoritedBy.find(item => !workingArticle.favoritedBy.includes(item)) : response.data.Item.favoritedBy[0]}});
+                                                                        eventPublisher({name: "FAVED", params: {article_slug: response.data.Item.slug,
+														user_uuid: workingArticle.favoritedBy ? argumentsList.Item.favoritedBy.find(item => !workingArticle.favoritedBy.includes(item)) : response.data.Item.favoritedBy[0]}});
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -96,7 +98,8 @@ const mock = {
                                                         if (argumentsList[0].TableName === articlesTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                    eventPublisher({name: "DELETED_ARTICLE", params: {article_title: argumentsList[0].Key.slug, user: workingArticle.author}});
+                                                                    eventPublisher({name: "DELETED_ARTICLE", params: {article_slug: argumentsList[0].Key.slug,
+														      author_uuid: workingArticle.author}});
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -111,9 +114,11 @@ const mock = {
                                                                 .on('success', function (response) {
                                                                     for (const article of response.data.Items) {
                                                                         if (context === 'getFeed') {
-                                                                            eventPublisher({name: "IN_FEED", params: {article_title: article.slug, author: article.author, user: workingUser.username}});
+                                                                            eventPublisher({name: "IN_FEED", params: {article_slug: article.slug,
+														      author_uuid: article.author,
+														      user_uuid: workingUser.username}});
                                                                         } else { // context === 'list'
-                                                                            eventPublisher({name: "LISTED", params: {article_title: article.slug}});
+                                                                            eventPublisher({name: "LISTED", params: {article_slug: article.slug}});
                                                                         }
                                                                     }
                                                                 });

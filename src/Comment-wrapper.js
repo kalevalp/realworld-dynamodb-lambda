@@ -1,4 +1,6 @@
 const recorder = require('watchtower-recorder');
+const eventsStreamName = process.env['WATCHTOWER_EVENT_KINESIS_STREAM'];
+const eventPublisher = recorder.createEventPublisher(eventsStreamName);
 
 const Util = require('./Util');
 // Loading modules that fail when required via vm2
@@ -32,7 +34,7 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
                                                                     for (const comment of response.data.Items) {
-                                                                        console.log(`#####EVENTUPDATE[RETRIEVED_COMMENT(${comment.slug}, ${comment.id})]#####`);
+									eventPublisher({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug, comment_uuid: comment.id}});
                                                                     }
                                                                 });
                                                         else
@@ -58,7 +60,10 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
                                                                     if (response.data && response.data.Item && response.data.Item.slug)
-                                                                        console.log(`#####EVENTUPDATE[COMMENTED(${argumentsList[0].Item.slug},${argumentsList[0].Item.author}, ${argumentsList[0].Item.id})]#####`);
+                                                                        eventPublisher({name: "COMMENTED", params: {article_slug: argumentsList[0].Item.slug,
+														    user_uuid: argumentsList[0].Item.author,
+														    comment_uuid:argumentsList[0].Item.id}});
+
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -70,7 +75,8 @@ const mock = {
                                                         if (argumentsList[0].TableName === commentsTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                    console.log(`#####EVENTUPDATE[DELETED_ARTICLE(${argumentsList[0].Key}, ${workingComment.author})]#####`);
+                                                                    eventPublisher({name:'DELETED_COMMENT', params: {article_slug: argumentsList[0].Key,
+														     comment_uuid: workingComment.author}});
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);

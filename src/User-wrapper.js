@@ -1,4 +1,6 @@
 const recorder = require('watchtower-recorder');
+const eventsStreamName = process.env['WATCHTOWER_EVENT_KINESIS_STREAM'];
+const eventPublisher = recorder.createEventPublisher(eventsStreamName);
 
 const Util = require('./Util');
 
@@ -24,7 +26,7 @@ const mock = {
                 return new Proxy(obj[prop], {
                     apply: function (target, thisArg, argumentsList) {
                         if (context === 'login' && argumentsList[0] && argumentsList[0].user) {
-                            console.log(`#####EVENTUPDATE[LOGGED_IN(${argumentsList[0].user.username})]#####`);
+			    eventPublisher({name: "LOGGED_IN", params: {user_uuid: argumentsList[0].user.username}});
                         }
                         return target.apply(thisArg, argumentsList);
                     }
@@ -70,9 +72,11 @@ const mock = {
                                                                 .on('success', function () {
                                                                     if (context === 'follow' && argumentsList[0].Item.username === follower.username) { // Follower put is notification point.
                                                                         if (!follower.following.values || !follower.following.values.includes(followee.username)) {
-                                                                            console.log(`#####EVENTUPDATE[UNFOLLOWED(${follower.username},${followee.username})]#####`);
+                                                                            eventPublisher({name: "UNFOLLOWED", params: {user_uuid: follower.username,
+															 author_uuid: followee.username}});
                                                                         } else {
-                                                                            console.log(`#####EVENTUPDATE[FOLLOWED(${follower.username},${followee.username})]#####`);
+                                                                            eventPublisher({name: "FOLLOWED", params: {user_uuid: follower.username,
+														       author_uuid: followee.username}});
                                                                         }
                                                                     }
                                                                 });

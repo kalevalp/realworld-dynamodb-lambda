@@ -1,4 +1,6 @@
 const recorder = require('watchtower-recorder');
+const eventsStreamName = process.env['WATCHTOWER_EVENT_KINESIS_STREAM'];
+const eventPublisher = recorder.createEventPublisher(eventsStreamName);
 
 const Util = require('./Util');
 const GDPRConsentTable = Util.getTableName('gdpr-consent');
@@ -23,9 +25,9 @@ const mock = {
                                                     apply: function (target, thisArg, argumentsList) {
                                                         if (argumentsList[0].TableName === GDPRConsentTable)
                                                             return target.apply(thisArg, argumentsList)
-                                                                .on('success', function () {
-                                                                    console.log(`#####EVENTUPDATE[GOT_CONSENT(${argumentsList[0].Item.uuid})]#####`);
-                                                                });
+                                                            .on('success', function () {
+								eventPublisher({name: "GOT_CONSENT", params: {uuid: argumentsList[0].Item.uuid}});
+                                                            });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
                                                     },
@@ -36,7 +38,7 @@ const mock = {
                                                         if (argumentsList[0].TableName === GDPRConsentTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                    console.log(`#####EVENTUPDATE[REVOKED_CONSENT(${argumentsList[0].Key.uuid})]#####`);
+                                                                    eventPublisher({name: "REVOKED_CONSENT", params: {uuid: argumentsList[0].Key.uuid}});
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
