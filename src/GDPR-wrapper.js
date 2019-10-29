@@ -9,6 +9,16 @@ const GDPRConsentTable = Util.getTableName('gdpr-consent');
 const aws = require('aws-sdk');
 const jws = require('jws');
 
+let context;
+let lambdaExecutionContext;
+let lambdaInputEvent;
+function updateContext(name, event, lambdaContext) {
+    context = name;
+    lambdaExecutionContext = lambdaContext;
+    lambdaInputEvent = event;
+}
+
+
 const mock = {
     'aws-sdk' : new Proxy(aws, {
         get: function (obj, prop) {
@@ -26,7 +36,8 @@ const mock = {
                                                         if (argumentsList[0].TableName === GDPRConsentTable)
                                                             return target.apply(thisArg, argumentsList)
                                                             .on('success', function () {
-								eventPublisher({name: "GOT_CONSENT", params: {uuid: argumentsList[0].Item.uuid}});
+								eventPublisher({name: "GOT_CONSENT", params: {uuid: argumentsList[0].Item.uuid}},
+									       lambdaExecutionContext);
                                                             });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -38,7 +49,8 @@ const mock = {
                                                         if (argumentsList[0].TableName === GDPRConsentTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                    eventPublisher({name: "REVOKED_CONSENT", params: {uuid: argumentsList[0].Key.uuid}});
+                                                                    eventPublisher({name: "REVOKED_CONSENT", params: {uuid: argumentsList[0].Key.uuid}},
+										   lambdaExecutionContext);
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -61,5 +73,5 @@ const mock = {
     'jws'     : jws,
 };
 
-module.exports.consent = recorder.createRecordingHandler('src/GDPR.js', 'consent', mock);
-module.exports.revoke = recorder.createRecordingHandler('src/GDPR.js', 'revoke', mock);
+module.exports.consent = recorder.createRecordingHandler('src/GDPR.js', 'consent', mock, false, updateContext);
+module.exports.revoke = recorder.createRecordingHandler('src/GDPR.js', 'revoke', mock, false, updateContext);

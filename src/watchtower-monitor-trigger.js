@@ -11,7 +11,7 @@ async function triggerCheckerStateMachine(event) {
     event.checkerFlow = "runOnce";
     event.stabilityDelay = 7;
     event.triggerStartTime = Date.now();
-    
+
     const execParams = {
 	stateMachineArn,
 	input: JSON.stringify(event),

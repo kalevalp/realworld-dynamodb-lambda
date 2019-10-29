@@ -5,12 +5,12 @@ const properties = [
     //   and not revoked since then.
     {
         name: 'gdpr7',
-        quantifiedVariables: ['uuid'],
-        projections: [['uuid']],
+        quantifiedVariables: ['user_id'],
+        projections: [['user_id']],
         stateMachine: {
             'GOT_CONSENT': {
                 params: [
-                    'uuid'
+                    'user_id'
                 ],
                 'INITIAL' : {
                     to: 'consented'
@@ -18,7 +18,7 @@ const properties = [
             },
             'REVOKED_CONSENT': {
                 params: [
-                    'uuid'
+                    'user_id'
                 ],
                 'consented': {
                     to: 'INITIAL'
@@ -27,7 +27,7 @@ const properties = [
 
             'PROCESSING_DATA': {
                 params: [
-                    'uuid'
+                    'user_id'
                 ],
                 'INITIAL': {
                     to: 'FAILURE'

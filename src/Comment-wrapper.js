@@ -12,8 +12,12 @@ const commentsTable = Util.getTableName('comments');
 let workingComment;
 
 let context;
-function updateContext(name) {
+let lambdaExecutionContext;
+let lambdaInputEvent;
+function updateContext(name, event, lambdaContext) {
     context = name;
+    lambdaExecutionContext = lambdaContext;
+    lambdaInputEvent = event;
 }
 
 const mock = {
@@ -34,7 +38,9 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
                                                                     for (const comment of response.data.Items) {
-									eventPublisher({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug, comment_uuid: comment.id}});
+									eventPublisher({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug,
+															    comment_uuid: comment.id}},
+										       lambdaExecutionContext);
                                                                     }
                                                                 });
                                                         else
@@ -62,7 +68,8 @@ const mock = {
                                                                     if (response.data && response.data.Item && response.data.Item.slug)
                                                                         eventPublisher({name: "COMMENTED", params: {article_slug: argumentsList[0].Item.slug,
 														    user_uuid: argumentsList[0].Item.author,
-														    comment_uuid:argumentsList[0].Item.id}});
+														    comment_uuid:argumentsList[0].Item.id}},
+										       lambdaExecutionContext);
 
                                                                 });
                                                         else
@@ -75,8 +82,9 @@ const mock = {
                                                         if (argumentsList[0].TableName === commentsTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                    eventPublisher({name:'DELETED_COMMENT', params: {article_slug: argumentsList[0].Key,
-														     comment_uuid: workingComment.author}});
+                                                                    eventPublisher({name:'DELETED_COMMENT', params: {article_slug: workingComment.slug,
+														     comment_uuid: argumentsList[0].Key.id}},
+										   lambdaExecutionContext);
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);

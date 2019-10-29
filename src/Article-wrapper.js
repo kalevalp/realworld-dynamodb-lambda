@@ -45,9 +45,11 @@ const mock = {
                                                                         workingUser = response.data.Item;
                                                                     }
                                                                     if (response.data && response.data.Item && response.data.Item.uuid)
-                                                                        eventPublisher({name: "PROCESSING_DATA", params: {user_id: response.data.Item.uuid}});
+                                                                        eventPublisher({name: "PROCESSING_DATA", params: {user_id: response.data.Item.uuid}},
+										       lambdaExecutionContext);
                                                                     else
-                                                                        eventPublisher({name: "PROCESSING_NO_ID", params: {}});
+                                                                        eventPublisher({name: "PROCESSING_NO_ID", params: {}},
+										       lambdaExecutionContext);
                                                                 });
                                                         if (argumentsList[0].TableName === articlesTable)
                                                             return target.apply(thisArg, argumentsList)
@@ -57,7 +59,8 @@ const mock = {
                                                                     }
                                                                     if (context === 'get') {
                                                                         if (response.data && response.data.Item && response.data.Item.slug)
-                                                                            eventPublisher({name: "RETRIEVED_ARTICLE", params: {article_slug: response.data.Item.slug}});
+                                                                            eventPublisher({name: "RETRIEVED_ARTICLE", params: {article_slug: response.data.Item.slug}},
+											   lambdaExecutionContext);
                                                                     }
                                                                 });
                                                         else
@@ -71,7 +74,8 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                             .on('success', function (response) {
                                                                 eventPublisher({name: "PUBLISHED_ARTICLE", params: {article_slug: argumentsList[0].Item.slug,
-														    author_uuid: argumentsList[0].Item.author}});
+														    author_uuid: argumentsList[0].Item.author}},
+									       lambdaExecutionContext);
                                                             });
                                                         } else
                                                             return target.apply(thisArg, argumentsList);
@@ -86,7 +90,8 @@ const mock = {
                                                                 .on('success', function (response) {
                                                                     if (response.data && response.data.Item && response.data.Item.slug)
                                                                         eventPublisher({name: "FAVED", params: {article_slug: response.data.Item.slug,
-														user_uuid: workingArticle.favoritedBy ? argumentsList.Item.favoritedBy.find(item => !workingArticle.favoritedBy.includes(item)) : response.data.Item.favoritedBy[0]}});
+														user_uuid: workingArticle.favoritedBy ? argumentsList.Item.favoritedBy.find(item => !workingArticle.favoritedBy.includes(item)) : response.data.Item.favoritedBy[0]}},
+										       lambdaExecutionContext);
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -99,7 +104,8 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
                                                                     eventPublisher({name: "DELETED_ARTICLE", params: {article_slug: argumentsList[0].Key.slug,
-														      author_uuid: workingArticle.author}});
+														      author_uuid: workingArticle.author}},
+										   lambdaExecutionContext);
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -116,9 +122,11 @@ const mock = {
                                                                         if (context === 'getFeed') {
                                                                             eventPublisher({name: "IN_FEED", params: {article_slug: article.slug,
 														      author_uuid: article.author,
-														      user_uuid: workingUser.username}});
+														      user_uuid: workingUser.username}},
+											   lambdaExecutionContext);
                                                                         } else { // context === 'list'
-                                                                            eventPublisher({name: "LISTED", params: {article_slug: article.slug}});
+                                                                            eventPublisher({name: "LISTED", params: {article_slug: article.slug}},
+											   lambdaExecutionContext);
                                                                         }
                                                                     }
                                                                 });

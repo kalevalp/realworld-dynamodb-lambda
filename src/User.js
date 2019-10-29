@@ -57,7 +57,7 @@ module.exports = {
 	  uuid: newUser.uuid,
       },
     }).promise();
-
+	console.log("Success!")
     return Util.envelop({
       user: {
         email: newUser.email,
