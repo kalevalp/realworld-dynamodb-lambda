@@ -68,15 +68,18 @@ const UtilMock = {
                                                                 .on('success', function () {
                                                                     if (context === 'follow' && argumentsList[0].Item.username === follower.username) { // Follower put is notification point.
                                                                         if (!follower.following || !follower.following.values || !follower.following.values.includes(followee.username)) {
-                                                                            eventPublisher({name: "UNFOLLOWED", params: {user_uuid: follower.username,
-															 author_uuid: followee.username}},
+                                                                            eventPublisher({name: "UNFOLLOWED", params: {reader: follower.username,
+															 user: followee.username}},
 											   lambdaExecutionContext);
                                                                         } else {
-                                                                            eventPublisher({name: "FOLLOWED", params: {user_uuid: follower.username,
-														       author_uuid: followee.username}},
+                                                                            eventPublisher({name: "FOLLOWED", params: {reader: follower.username,
+														       user: followee.username}},
 											   lambdaExecutionContext);
                                                                         }
-                                                                    }
+                                                                    } else if (context === 'create') {
+                                                                        eventPublisher({name: "LOGGED_IN", params: {user: argumentsList[0].Item.username}},
+										       lambdaExecutionContext);
+								    }
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -116,7 +119,7 @@ const LambdaMock = {
 			if (debug) console.log("In Util wrapper. calling envelop. argumentsList: ", JSON.stringify(argumentsList));
 
                         if (context === 'login' && argumentsList[0] && argumentsList[0].user) {
-			    eventPublisher({name: "LOGGED_IN", params: {user_uuid: argumentsList[0].user.username}},
+			    eventPublisher({name: "LOGGED_IN", params: {user: argumentsList[0].user.username}},
 					   lambdaExecutionContext);
                         }
                         return target.apply(thisArg, argumentsList);

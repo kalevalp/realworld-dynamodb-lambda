@@ -40,9 +40,9 @@
     "jsonwebtoken": "^8.1.0",
     "slugify": "^1.2.6",
     "uuid": "^3.2.1",
-    "watchtower-log-ingestion": "^1.9.2",
-    "watchtower-monitor": "^1.7.2",
-    "watchtower-property-utils": "^1.2.6",
+    "watchtower-log-ingestion": "^1.9.3",
+    "watchtower-monitor": "^1.7.4",
+    "watchtower-property-utils": "^1.2.7",
     "watchtower-recorder": "^1.6.1"
   },
   "optionalDependencies": {

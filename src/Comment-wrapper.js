@@ -65,11 +65,10 @@ const mock = {
                                                         if (argumentsList[0].TableName === commentsTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
-                                                                    if (response.data && response.data.Item && response.data.Item.slug)
-                                                                        eventPublisher({name: "COMMENTED", params: {article_slug: argumentsList[0].Item.slug,
-														    user_uuid: argumentsList[0].Item.author,
-														    comment_uuid:argumentsList[0].Item.id}},
-										       lambdaExecutionContext);
+                                                                    eventPublisher({name: "COMMENTED", params: {article_slug: argumentsList[0].Item.slug,
+														user: argumentsList[0].Item.author,
+														comment_uuid:argumentsList[0].Item.id}},
+										   lambdaExecutionContext);
 
                                                                 });
                                                         else

@@ -45,7 +45,7 @@ module.exports = {
       if (!newUser.uuid) {
 	  newUser.uuid = uuidv4();
       }
-      
+
     // Add new entry to usersTable
     const encryptedPassword = bcrypt.hashSync(newUser.password, 5);
     await Util.DocumentClient.put({

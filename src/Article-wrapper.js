@@ -1,7 +1,7 @@
 const recorder = require('watchtower-recorder');
 const eventsStreamName = process.env['WATCHTOWER_EVENT_KINESIS_STREAM'];
 const eventPublisher = recorder.createEventPublisher(eventsStreamName);
-
+const debug   = process.env.DEBUG_WATCHTOWER;
 
 const Util = require('./Util');
 const usersTable = Util.getTableName('users');
@@ -55,7 +55,7 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
                                                                     if (context === 'favorite' || context === 'delete') {
-                                                                        workingArticle = response.data.Item;
+                                                                        workingArticle = response.data.Item !== undefined ? JSON.parse(JSON.stringify(response.data.Item)): response.data.Item;
                                                                     }
                                                                     if (context === 'get') {
                                                                         if (response.data && response.data.Item && response.data.Item.slug)
@@ -74,37 +74,49 @@ const mock = {
                                                             return target.apply(thisArg, argumentsList)
                                                             .on('success', function (response) {
                                                                 eventPublisher({name: "PUBLISHED_ARTICLE", params: {article_slug: argumentsList[0].Item.slug,
-														    author_uuid: argumentsList[0].Item.author}},
+														    user: argumentsList[0].Item.author}},
 									       lambdaExecutionContext);
                                                             });
                                                         } else
                                                             return target.apply(thisArg, argumentsList);
                                                     },
                                                 });
-                                            } else if (prop === 'put' && context === 'favorite')
+                                            } else if (prop === 'put' && context === 'favorite') {
+						if (debug) console.log("In wrapper. put in context of favorite");
                                                 return new Proxy(obj[prop], {
                                                     apply: function (target, thisArg, argumentsList) {
+							if (debug) console.log("Calling put. argumentsList is: ", JSON.stringify(argumentsList));
+							if (debug) console.log("Calling put. Working article is: ", JSON.stringify(workingArticle));
                                                         if (argumentsList[0].TableName === articlesTable &&
-                                                            workingArticle.favoritesCount < argumentsList[0].Item.favoritesCount)
+                                                            ( !workingArticle.favoritesCount || workingArticle.favoritesCount < argumentsList[0].Item.favoritesCount ))
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function (response) {
-                                                                    if (response.data && response.data.Item && response.data.Item.slug)
-                                                                        eventPublisher({name: "FAVED", params: {article_slug: response.data.Item.slug,
-														user_uuid: workingArticle.favoritedBy ? argumentsList.Item.favoritedBy.find(item => !workingArticle.favoritedBy.includes(item)) : response.data.Item.favoritedBy[0]}},
-										       lambdaExecutionContext);
+								    if (debug) console.log("Called put for un/fave, in 'on success'.");
+
+								    let favedUser;
+								    if (workingArticle.favoritedBy) {
+									favedUser = argumentsList[0].Item.favoritedBy.find(item =>
+															   !workingArticle.favoritedBy.includes(item));
+								    } else {
+									favedUser = argumentsList[0].Item.favoritedBy[0];
+								    }
+
+                                                                    eventPublisher({name: "FAVED", params: {article_slug: argumentsList[0].Item.slug,
+													    user: favedUser}},
+										   lambdaExecutionContext);
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
                                                     },
                                                 });
-                                            else if (prop === 'delete') {
+                                            } else if (prop === 'delete') {
                                                 return new Proxy(obj[prop], {
                                                     apply: function (target, thisArg, argumentsList) {
                                                         if (argumentsList[0].TableName === articlesTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
                                                                     eventPublisher({name: "DELETED_ARTICLE", params: {article_slug: argumentsList[0].Key.slug,
-														      author_uuid: workingArticle.author}},
+														      user: workingArticle.author}},
 										   lambdaExecutionContext);
                                                                 });
                                                         else
@@ -121,8 +133,8 @@ const mock = {
                                                                     for (const article of response.data.Items) {
                                                                         if (context === 'getFeed') {
                                                                             eventPublisher({name: "IN_FEED", params: {article_slug: article.slug,
-														      author_uuid: article.author,
-														      user_uuid: workingUser.username}},
+														      user: article.author,
+														      reader: workingUser.username}},
 											   lambdaExecutionContext);
                                                                         } else { // context === 'list'
                                                                             eventPublisher({name: "LISTED", params: {article_slug: article.slug}},
