@@ -45,10 +45,7 @@ const mock = {
                                                                         workingUser = response.data.Item;
                                                                     }
                                                                     if (response.data && response.data.Item && response.data.Item.uuid)
-                                                                        eventPublisher({name: "PROCESSING_DATA", params: {user_id: response.data.Item.uuid}},
-										       lambdaExecutionContext);
-                                                                    else
-                                                                        eventPublisher({name: "PROCESSING_NO_ID", params: {}},
+                                                                        eventPublisher({name: "PROCESSING_DATA", params: {user: response.data.Item.uuid}},
 										       lambdaExecutionContext);
                                                                 });
                                                         if (argumentsList[0].TableName === articlesTable)

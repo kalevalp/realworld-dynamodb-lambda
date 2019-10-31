@@ -1,20 +1,20 @@
 const Util = require('./Util');
 const GDPRConsentTable = Util.getTableName('gdpr-consent');
 
-module.exports = {    
+module.exports = {
     async consent(event) {
         console.log(event);
         console.log(event.body);
         const body = JSON.parse(event.body);
-        if (!body.uuid) {
-            return Util.envelop('uuid must be specified.', 422);
+        if (!body.user) {
+            return Util.envelop('user must be specified.', 422);
         }
-        
-        const uuid = body.uuid;
-        
+
+        const user = body.user;
+
         const consent = {
-            uuid,
-            createdAt : (new Date()).getTime(),           
+            user,
+            createdAt : (new Date()).getTime(),
         }
 
         await Util.DocumentClient.put({
@@ -29,13 +29,13 @@ module.exports = {
     async revoke(event) {
         console.log(event);
         console.log(event.queryStringParameters);
-        
-        const uuid = event.queryStringParameters.uuid;
+
+        const user = event.queryStringParameters.user;
 
         await Util.DocumentClient.delete({
             TableName: GDPRConsentTable,
             Key: {
-                uuid,
+                user,
             }
         }).promise();
 

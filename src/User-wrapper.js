@@ -53,7 +53,13 @@ const UtilMock = {
                                                                             followee = response.data.Item;
 									    if (debug) console.log("Follow proxy. got followee:", JSON.stringify(followee));
                                                                         }
-                                                                    }
+                                                                    } else if (context === 'getProfile') {
+									if (debug) console.log("getProfile ddb.get response: ", JSON.stringify(response.data));
+									if (response && response.data && response.data.Item && response.data.Item.uuid) {
+									    eventPublisher({name: "PROCESSING_DATA", params: {user: response.data.Item.uuid}},
+											   lambdaExecutionContext);
+									}
+								    }
                                                                 });
                                                         else
                                                             return target.apply(thisArg, argumentsList);
@@ -79,6 +85,9 @@ const UtilMock = {
                                                                     } else if (context === 'create') {
                                                                         eventPublisher({name: "LOGGED_IN", params: {user: argumentsList[0].Item.username}},
 										       lambdaExecutionContext);
+									eventPublisher({name: "GOT_CONSENT", params: {user: argumentsList[0].Item.uuid}},
+										       lambdaExecutionContext);
+
 								    }
                                                                 });
                                                         else

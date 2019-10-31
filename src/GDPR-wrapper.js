@@ -36,7 +36,7 @@ const mock = {
                                                         if (argumentsList[0].TableName === GDPRConsentTable)
                                                             return target.apply(thisArg, argumentsList)
                                                             .on('success', function () {
-								eventPublisher({name: "GOT_CONSENT", params: {uuid: argumentsList[0].Item.uuid}},
+								eventPublisher({name: "GOT_CONSENT", params: {user: argumentsList[0].Item.uuid}},
 									       lambdaExecutionContext);
                                                             });
                                                         else
@@ -49,7 +49,7 @@ const mock = {
                                                         if (argumentsList[0].TableName === GDPRConsentTable)
                                                             return target.apply(thisArg, argumentsList)
                                                                 .on('success', function () {
-                                                                    eventPublisher({name: "REVOKED_CONSENT", params: {uuid: argumentsList[0].Key.uuid}},
+                                                                    eventPublisher({name: "REVOKED_CONSENT", params: {user: argumentsList[0].Key.uuid}},
 										   lambdaExecutionContext);
                                                                 });
                                                         else
