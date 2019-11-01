@@ -2,8 +2,10 @@ const TestUtil = require('./TestUtil');
 const assert = require('assert');
 const axios = require('axios');
 
+let count = 0;
+
 axios.interceptors.request.use(function (config) {
-    config.metadata = { startTime: new Date()};
+    config.metadata = { startTime: new Date(), callNumber: count++ };
     return config;
 }, function (error) {
     return Promise.reject(error);
@@ -12,11 +14,12 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
     response.config.metadata.endTime = new Date();
     response.duration = response.config.metadata.endTime - response.config.metadata.startTime;
-    console.log("**** Duration: ", response.duration);
+    console.log("**** Call ##", response.config.metadata.callNumber,"## Duration: ", response.duration);
     return response;
 }, function (error) {
     error.config.metadata.endTime = new Date();
     error.duration = error.config.metadata.endTime - error.config.metadata.startTime;
+    console.log("**** Call ##", error.config.metadata.callNumber,"## Duration: ", error.duration, "(ERR)");
     return Promise.reject(error);
 });
 
@@ -79,7 +82,7 @@ describe('Article', async () => {
             title: lorem.generateSentences(1),
             description: lorem.generateParagraphs(1),
             body: lorem.generateParagraphs(12),
-            tagList: ['tag_a', 'tag_b'],
+              tagList: lorem.generateWords(4),
           },
         }, {
           headers: { Authorization: `Token ${globals.authorUser.token}` },
@@ -161,22 +164,24 @@ describe('Article', async () => {
 
     it('should update article', async () => {
       let updatedArticle;
-
+	const newtitle = lorem.generateSentences(1);
       updatedArticle = (await axios.put(
         `/articles/${globals.createdArticleWithTags.slug}`, {
-          article: { title: 'newtitle' },
+          article: { title: newtitle },
         }, {
           headers: { Authorization: `Token ${globals.authorUser.token}` },
         })).data.article;
-      assert.equal(updatedArticle.title, 'newtitle');
+      assert.equal(updatedArticle.title, newtitle);
 
+	const newdescription = lorem.generateParagraphs(1);
+	
       updatedArticle = (await axios.put(
         `/articles/${globals.createdArticleWithTags.slug}`, {
-          article: { description: 'newdescription' },
+          article: { description: newdescription },
         }, {
           headers: { Authorization: `Token ${globals.authorUser.token}` },
         })).data.article;
-      assert.equal(updatedArticle.description, 'newdescription');
+      assert.equal(updatedArticle.description, newdescription);
 
       const newbody = lorem.generateParagraphs(12) ;
 	
