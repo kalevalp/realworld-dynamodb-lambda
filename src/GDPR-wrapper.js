@@ -18,6 +18,37 @@ function updateContext(name, event, lambdaContext) {
     lambdaInputEvent = event;
 }
 
+let ddbdcDeleteProxy;
+function getDdbdcDeleteProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+            if (argumentsList[0].TableName === GDPRConsentTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function () {
+                    eventPublisher({name: "REVOKED_CONSENT", params: {user: argumentsList[0].Key.uuid}},
+				   lambdaExecutionContext);
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
+
+let ddbdcPutProxy;
+function getDdbdcPutProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+            if (argumentsList[0].TableName === GDPRConsentTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function () {
+		    eventPublisher({name: "GOT_CONSENT", params: {user: argumentsList[0].Item.uuid}},
+				   lambdaExecutionContext);
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
 
 const mock = {
     'aws-sdk' : new Proxy(aws, {
@@ -30,34 +61,19 @@ const mock = {
                                 construct: function (target, args) {
                                     return new Proxy(new target(...args), {
                                         get: function (obj, prop) {
-                                            if (prop === 'put')
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-                                                        if (argumentsList[0].TableName === GDPRConsentTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                            .on('success', function () {
-								eventPublisher({name: "GOT_CONSENT", params: {user: argumentsList[0].Item.uuid}},
-									       lambdaExecutionContext);
-                                                            });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
-                                            else if (prop === 'delete')
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-                                                        if (argumentsList[0].TableName === GDPRConsentTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                                .on('success', function () {
-                                                                    eventPublisher({name: "REVOKED_CONSENT", params: {user: argumentsList[0].Key.uuid}},
-										   lambdaExecutionContext);
-                                                                });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
-                                            else
+                                            if (prop === 'put') {
+                                                if (!ddbdcPutProxy) {
+                                                    ddbdcPutProxy = getDdbdcPutProxy(obj[prop]);
+                                                }
+                                                return ddbdcPutProxy;
+                                            } else if (prop === 'delete') {
+                                                if (!ddbdcDeleteProxy) {
+                                                    ddbdcDeleteProxy = getDdbdcDeleteProxy(obj[prop]);
+                                                }
+                                                return ddbdcDeleteProxy;
+                                            } else {
                                                 return obj[prop];
+                                            }
                                         }
                                     });
                                 },

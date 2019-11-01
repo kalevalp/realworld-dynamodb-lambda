@@ -24,6 +24,70 @@ function updateContext(name, event, lambdaContext) {
     lambdaInputEvent = event;
 }
 
+let ddbdcGetProxy;
+function getDdbdcGetProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+	    if (debug) console.log("In follow, DynamoDB.DocumentClient.get, argumentsList is:", JSON.stringify(argumentsList));
+            if (argumentsList[0].TableName === usersTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function (response) {
+                    if (context === 'follow') {
+                        if (firstPhaseUserGet) {
+                            firstPhaseUserGet = false;
+                            follower = response.data.Item;
+			    if (debug) console.log("Follow proxy. got follower:", JSON.stringify(follower));
+                        } else {
+                            firstPhaseUserGet = true;
+                            followee = response.data.Item;
+			    if (debug) console.log("Follow proxy. got followee:", JSON.stringify(followee));
+                        }
+                    } else if (context === 'getProfile') {
+		        if (debug) console.log("getProfile ddb.get response: ", JSON.stringify(response.data));
+		        if (response && response.data && response.data.Item && response.data.Item.uuid) {
+			    eventPublisher({name: "PROCESSING_DATA", params: {user: response.data.Item.uuid}},
+				           lambdaExecutionContext);
+		        }
+		    }
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
+
+let ddbdcPutProxy;
+function getDdbdcPutProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+	    if (debug) console.log("In follow, DynamoDB.DocumentClient.put, argumentsList is:", JSON.stringify(argumentsList));
+            if (argumentsList[0].TableName === usersTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function () {
+                    if (context === 'follow' && argumentsList[0].Item.username === follower.username) { // Follower put is notification point.
+                        if (!follower.following || !follower.following.values || !follower.following.values.includes(followee.username)) {
+                            eventPublisher({name: "UNFOLLOWED", params: {reader: follower.username,
+									 user: followee.username}},
+					   lambdaExecutionContext);
+                        } else {
+                            eventPublisher({name: "FOLLOWED", params: {reader: follower.username,
+								       user: followee.username}},
+					   lambdaExecutionContext);
+                        }
+                    } else if (context === 'create') {
+                        eventPublisher({name: "LOGGED_IN", params: {user: argumentsList[0].Item.username}},
+				       lambdaExecutionContext);
+			eventPublisher({name: "GOT_CONSENT", params: {user: argumentsList[0].Item.uuid}},
+				       lambdaExecutionContext);
+
+		    }
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
+
 const UtilMock = {
     'aws-sdk' : new Proxy(aws, {
         get: function (obj, prop) {
@@ -37,63 +101,16 @@ const UtilMock = {
                                         get: function (obj, prop) {
 					    if (debug) console.log("In follow, DynamoDB.DocumentClient.<x>, x is:", JSON.stringify(prop));
                                             if (prop === 'get') {
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-							if (debug) console.log("In follow, DynamoDB.DocumentClient.get, argumentsList is:", JSON.stringify(argumentsList));
-                                                        if (argumentsList[0].TableName === usersTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                                .on('success', function (response) {
-                                                                    if (context === 'follow') {
-                                                                        if (firstPhaseUserGet) {
-                                                                            firstPhaseUserGet = false;
-                                                                            follower = response.data.Item;
-									    if (debug) console.log("Follow proxy. got follower:", JSON.stringify(follower));
-                                                                        } else {
-                                                                            firstPhaseUserGet = true;
-                                                                            followee = response.data.Item;
-									    if (debug) console.log("Follow proxy. got followee:", JSON.stringify(followee));
-                                                                        }
-                                                                    } else if (context === 'getProfile') {
-									if (debug) console.log("getProfile ddb.get response: ", JSON.stringify(response.data));
-									if (response && response.data && response.data.Item && response.data.Item.uuid) {
-									    eventPublisher({name: "PROCESSING_DATA", params: {user: response.data.Item.uuid}},
-											   lambdaExecutionContext);
-									}
-								    }
-                                                                });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
-                                            } else if (prop === 'put') {
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-							if (debug) console.log("In follow, DynamoDB.DocumentClient.put, argumentsList is:", JSON.stringify(argumentsList));
-                                                        if (argumentsList[0].TableName === usersTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                                .on('success', function () {
-                                                                    if (context === 'follow' && argumentsList[0].Item.username === follower.username) { // Follower put is notification point.
-                                                                        if (!follower.following || !follower.following.values || !follower.following.values.includes(followee.username)) {
-                                                                            eventPublisher({name: "UNFOLLOWED", params: {reader: follower.username,
-															 user: followee.username}},
-											   lambdaExecutionContext);
-                                                                        } else {
-                                                                            eventPublisher({name: "FOLLOWED", params: {reader: follower.username,
-														       user: followee.username}},
-											   lambdaExecutionContext);
-                                                                        }
-                                                                    } else if (context === 'create') {
-                                                                        eventPublisher({name: "LOGGED_IN", params: {user: argumentsList[0].Item.username}},
-										       lambdaExecutionContext);
-									eventPublisher({name: "GOT_CONSENT", params: {user: argumentsList[0].Item.uuid}},
-										       lambdaExecutionContext);
+                                                if (!ddbdcGetProxy) {
+                                                    ddbdcGetProxy = getDdbdcGetProxy(obj[prop]);
+                                                }
+                                                return ddbdcGetProxy;
 
-								    }
-                                                                });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
+                                            } else if (prop === 'put') {
+                                                if (!ddbdcPutProxy) {
+                                                    ddbdcPutProxy = getDdbdcPutProxy(obj[prop]);
+                                                }
+                                                return ddbdcPutProxy;
 					    } else {
                                                 return obj[prop];
 					    }
