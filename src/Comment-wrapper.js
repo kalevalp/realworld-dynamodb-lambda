@@ -20,6 +20,78 @@ function updateContext(name, event, lambdaContext) {
     lambdaInputEvent = event;
 }
 
+let ddbdcGetProxy;
+function getDdbdcGetProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+            if (argumentsList[0].TableName === commentsTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function (response) {
+                    workingComment = response.data.Item;
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
+let ddbdcPutProxy;
+function getDdbdcPutProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+            if (argumentsList[0].TableName === commentsTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function (response) {
+                    eventPublisher({name: "COMMENTED", params: {article_slug: argumentsList[0].Item.slug,
+								user: argumentsList[0].Item.author,
+								comment_uuid:argumentsList[0].Item.id}},
+				   lambdaExecutionContext);
+
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
+
+let ddbdcQueryProxy;
+function getDdbdcQueryProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+            if (argumentsList[0].TableName === commentsTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function (response) {
+                    for (const comment of response.data.Items) {
+			eventPublisher({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug,
+									    comment_uuid: comment.id}},
+				       lambdaExecutionContext);
+                    }
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
+
+
+let ddbdcDeleteProxy;
+function getDdbdcDeleteProxy(underlyingObj) {
+    return new Proxy(underlyingObj, {
+        apply: function (target, thisArg, argumentsList) {
+            if (argumentsList[0].TableName === commentsTable)
+                return target.apply(thisArg, argumentsList)
+                .on('success', function () {
+                    eventPublisher({name:'DELETED_COMMENT', params: {article_slug: workingComment.slug,
+								     comment_uuid: argumentsList[0].Key.id}},
+				   lambdaExecutionContext);
+                });
+            else
+                return target.apply(thisArg, argumentsList);
+        },
+    });
+}
+
+
+
 const mock = {
     'aws-sdk' : new Proxy(aws, {
         get: function (obj, prop) {
@@ -31,65 +103,26 @@ const mock = {
                                 construct: function (target, args) {
                                     return new Proxy(new target(...args), {
                                         get: function (obj, prop) {
-                                            if (prop === 'query')
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-                                                        if (argumentsList[0].TableName === commentsTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                                .on('success', function (response) {
-                                                                    for (const comment of response.data.Items) {
-									eventPublisher({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug,
-															    comment_uuid: comment.id}},
-										       lambdaExecutionContext);
-                                                                    }
-                                                                });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
-                                            else if (prop === 'get' && context === 'delete')
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-                                                        if (argumentsList[0].TableName === commentsTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                                .on('success', function (response) {
-                                                                        workingComment = response.data.Item;
-                                                                });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
-                                            else if (prop === 'put')
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-                                                        if (argumentsList[0].TableName === commentsTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                                .on('success', function (response) {
-                                                                    eventPublisher({name: "COMMENTED", params: {article_slug: argumentsList[0].Item.slug,
-														user: argumentsList[0].Item.author,
-														comment_uuid:argumentsList[0].Item.id}},
-										   lambdaExecutionContext);
-
-                                                                });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
-                                            else if (prop === 'delete') {
-                                                return new Proxy(obj[prop], {
-                                                    apply: function (target, thisArg, argumentsList) {
-                                                        if (argumentsList[0].TableName === commentsTable)
-                                                            return target.apply(thisArg, argumentsList)
-                                                                .on('success', function () {
-                                                                    eventPublisher({name:'DELETED_COMMENT', params: {article_slug: workingComment.slug,
-														     comment_uuid: argumentsList[0].Key.id}},
-										   lambdaExecutionContext);
-                                                                });
-                                                        else
-                                                            return target.apply(thisArg, argumentsList);
-                                                    },
-                                                });
-
+                                            if (prop === 'query') {
+                                                if (!ddbdcQueryProxy) {
+                                                    ddbdcQueryProxy = getDdbdcQueryProxy(obj[prop]);
+                                                }
+                                                return ddbdcQueryProxy;
+                                            } else if (prop === 'get' && context === 'delete') {
+                                                if (!ddbdcGetProxy) {
+                                                    ddbdcGetProxy = getDdbdcGetProxy(obj[prop]);
+                                                }
+                                                return ddbdcGetProxy;
+                                            } else if (prop === 'put') {
+                                                if (!ddbdcPutProxy) {
+                                                    ddbdcPutProxy = getDdbdcPutProxy(obj[prop]);
+                                                }
+                                                return ddbdcPutProxy;
+                                            } else if (prop === 'delete') {
+                                                if (!ddbdcDeleteProxy) {
+                                                    ddbdcDeleteProxy = getDdbdcDeleteProxy(obj[prop]);
+                                                }
+                                                return ddbdcDeleteProxy;
                                             }
                                             else
                                                 return obj[prop];
