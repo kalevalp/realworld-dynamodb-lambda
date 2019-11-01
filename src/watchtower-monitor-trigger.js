@@ -8,7 +8,7 @@ const uuidv4 = require('uuid/v4');
 async function triggerCheckerStateMachine(event) {
     const execid = uuidv4();
 
-    event.checkerFlow = "runOnce";
+    event.checkerFlow = "runTwice";
     event.stabilityDelay = 7;
     event.triggerStartTime = Date.now();
 

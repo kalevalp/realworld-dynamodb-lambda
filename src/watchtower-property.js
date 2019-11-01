@@ -249,12 +249,12 @@ const properties = [
                 'published_and_followed': { to: 'followed' },
             },
             'FOLLOWED': {
-                params: ['reader', 'user'],
+                params: ['user', 'reader'],
                 'INITIAL': {to: 'followed'},
                 'published': {to: 'published_and_followed'},
             },
             'UNFOLLOWED': {
-                params: ['reader', 'user'],
+                params: ['user', 'reader'],
                 'followed': {to: 'INITIAL'},
                 'published_and_followed': {to: 'published'},
             },
