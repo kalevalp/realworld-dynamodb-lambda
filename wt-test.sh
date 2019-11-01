@@ -9,12 +9,12 @@ function run {
     serverless deploy
     sleep 10
     serverless deploy
-    sleep 60
+    sleep 30
 
     for i in $(seq 1 25)
     do
 	npm run test:deployed
-	sleep 240
+	sleep 60
     done
 
     node get-wt-times.js ${curr_resdir}/
@@ -23,8 +23,6 @@ function run {
 }
 
 export WT_RUN_NO_RECORDING=''
-
-
 
 export curr_resdir=${resdir}/no-rec-res
 mkdir ${curr_resdir}
