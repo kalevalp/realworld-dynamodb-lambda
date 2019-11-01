@@ -1,0 +1,991 @@
+ 
+  Serverless Error ---------------------------------------
+ 
+  Serverless plugin "serverless-step-functions" not found. Make sure it's installed and listed in the "plugins" section of your serverless config file.
+ 
+  Get Support --------------------------------------------
+     Docs:          docs.serverless.com
+     Bugs:          github.com/serverless/serverless/issues
+     Issues:        forum.serverless.com
+ 
+  Your Environment Information ---------------------------
+     Operating System:          linux
+     Node Version:              8.10.0
+     Framework Version:         1.54.0
+     Plugin Version:            3.1.2
+     SDK Version:               2.1.2
+     Components Core Version:   1.1.1
+     Components CLI Version:    1.2.3
+ 
+ 
+  Serverless Error ---------------------------------------
+ 
+  Serverless plugin "serverless-step-functions" not found. Make sure it's installed and listed in the "plugins" section of your serverless config file.
+ 
+  Get Support --------------------------------------------
+     Docs:          docs.serverless.com
+     Bugs:          github.com/serverless/serverless/issues
+     Issues:        forum.serverless.com
+ 
+  Your Environment Information ---------------------------
+     Operating System:          linux
+     Node Version:              8.10.0
+     Framework Version:         1.54.0
+     Plugin Version:            3.1.2
+     SDK Version:               2.1.2
+     Components Core Version:   1.1.1
+     Components CLI Version:    1.2.3
+ 
+ 
+  Serverless Error ---------------------------------------
+ 
+  Serverless plugin "serverless-step-functions" not found. Make sure it's installed and listed in the "plugins" section of your serverless config file.
+ 
+  Get Support --------------------------------------------
+     Docs:          docs.serverless.com
+     Bugs:          github.com/serverless/serverless/issues
+     Issues:        forum.serverless.com
+ 
+  Your Environment Information ---------------------------
+     Operating System:          linux
+     Node Version:              8.10.0
+     Framework Version:         1.54.0
+     Plugin Version:            3.1.2
+     SDK Version:               2.1.2
+     Components Core Version:   1.1.1
+     Components CLI Version:    1.2.3
+ 
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T13_54_32_007Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T13_58_34_801Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_02_38_135Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_06_40_934Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_10_43_859Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_14_46_693Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_18_49_456Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_22_52_321Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_26_55_062Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_30_57_969Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_35_00_883Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_39_03_683Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_43_06_451Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_47_09_237Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_51_12_095Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_55_15_171Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T14_59_18_060Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_03_21_045Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_07_23_878Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (21ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_11_26_692Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  14 (ERR)
+    1) "before all" hook
+
+  0 passing (22ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_15_29_513Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_19_32_367Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (23ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_23_35_200Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (21ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_27_38_023Z-debug.log
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  13 (ERR)
+    1) "before all" hook
+
+  0 passing (21ms)
+  1 failing
+
+  1) Article
+       "before all" hook:
+     Error: connect ECONNREFUSED 127.0.0.1:80
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)
+
+
+
+
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! realworld-dynamodb-lambda@1.0.0 test:deployed: `API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the realworld-dynamodb-lambda@1.0.0 test:deployed script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/ubuntu/.npm/_logs/2019-11-01T15_31_40_885Z-debug.log
+module.js:549
+    throw err;
+    ^
+
+Error: Cannot find module 'watchtower-anaysis-scripts'
+    at Function.Module._resolveFilename (module.js:547:15)
+    at Function.Module._load (module.js:474:25)
+    at Module.require (module.js:596:17)
+    at require (internal/module.js:11:18)
+    at Object.<anonymous> (/home/ubuntu/realworld-dynamodb-lambda/get-wt-times.js:1:79)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+ 
+  Serverless Error ---------------------------------------
+ 
+  Serverless plugin "serverless-step-functions" not found. Make sure it's installed and listed in the "plugins" section of your serverless config file.
+ 
+  Get Support --------------------------------------------
+     Docs:          docs.serverless.com
+     Bugs:          github.com/serverless/serverless/issues
+     Issues:        forum.serverless.com
+ 
+  Your Environment Information ---------------------------
+     Operating System:          linux
+     Node Version:              8.10.0
+     Framework Version:         1.54.0
+     Plugin Version:            3.1.2
+     SDK Version:               2.1.2
+     Components Core Version:   1.1.1
+     Components CLI Version:    1.2.3
+ 
