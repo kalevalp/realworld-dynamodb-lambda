@@ -1,6 +1,7 @@
 const recorder = require('watchtower-recorder');
 const eventsStreamName = process.env['WATCHTOWER_EVENT_KINESIS_STREAM'];
 const eventPublisher = recorder.createEventPublisher(eventsStreamName);
+const batchEventPublisher = recorder.createBatchEventPublisher(eventsStreamName);
 const debug   = process.env.DEBUG_WATCHTOWER;
 
 const Util = require('./Util');
@@ -125,17 +126,16 @@ function getDdbdcQueryProxy(underlyingObj) {
             if (argumentsList[0].TableName === articlesTable &&
                 ['getFeed', 'list'].includes(context)) {
                 return target.apply(thisArg, argumentsList)
-                .on('success', function (response) {
-                    for (const article of response.data.Items) {
-                        if (context === 'getFeed') {
-                            eventPublisher({name: "IN_FEED", params: {article_slug: article.slug,
-								      user: article.author,
-								      reader: workingUser.username}},
-					   lambdaExecutionContext);
-                        } else { // context === 'list'
-                            eventPublisher({name: "LISTED", params: {article_slug: article.slug}},
-					   lambdaExecutionContext);
-                        }
+                .on('success', function (response) {                    
+                    if (context === 'getFeed') {
+                        const logEvents = response.data.Items.map(article => ({name: "IN_FEED", params: {article_slug: article.slug,
+								                                         user: article.author,
+								                                         reader: workingUser.username}}));
+                        batchEventPublisher(logEvents,lambdaExecutionContext);
+                        
+                    } else { // context === 'list'
+                        const logEvents = response.data.Items.map(article => ({name: "LISTED", params: {article_slug: article.slug}}))
+                        batchEventPublisher(logEvents,lambdaExecutionContext);
                     }
                 });
             } else {
