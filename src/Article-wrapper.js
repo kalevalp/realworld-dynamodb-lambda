@@ -126,16 +126,18 @@ function getDdbdcQueryProxy(underlyingObj) {
             if (argumentsList[0].TableName === articlesTable &&
                 ['getFeed', 'list'].includes(context)) {
                 return target.apply(thisArg, argumentsList)
-                .on('success', function (response) {                    
-                    if (context === 'getFeed') {
-                        const logEvents = response.data.Items.map(article => ({name: "IN_FEED", params: {article_slug: article.slug,
-								                                         user: article.author,
-								                                         reader: workingUser.username}}));
-                        batchEventPublisher(logEvents,lambdaExecutionContext);
-                        
-                    } else { // context === 'list'
-                        const logEvents = response.data.Items.map(article => ({name: "LISTED", params: {article_slug: article.slug}}))
-                        batchEventPublisher(logEvents,lambdaExecutionContext);
+                .on('success', function (response) {
+                    if (response.data.Items.length > 0) {
+                        if (context === 'getFeed') {
+                            const logEvents = response.data.Items.map(article => ({name: "IN_FEED", params: {article_slug: article.slug,
+								                                             user: article.author,
+								                                             reader: workingUser.username}}));
+                            batchEventPublisher(logEvents,lambdaExecutionContext);
+                            
+                        } else { // context === 'list'
+                            const logEvents = response.data.Items.map(article => ({name: "LISTED", params: {article_slug: article.slug}}))
+                            batchEventPublisher(logEvents,lambdaExecutionContext);
+                        }
                     }
                 });
             } else {

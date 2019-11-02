@@ -61,9 +61,11 @@ function getDdbdcQueryProxy(underlyingObj) {
             if (argumentsList[0].TableName === commentsTable)
                 return target.apply(thisArg, argumentsList)
                 .on('success', function (response) {
-                    const logEvents = response.data.Items.map(comment => ({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug,
-									                                       comment_uuid: comment.id}}));
-                    batchEventPublisher(logEvents,lambdaExecutionContext);
+                    if (response.data.Items.length > 0) {
+                        const logEvents = response.data.Items.map(comment => ({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug,
+									                                           comment_uuid: comment.id}}));
+                        batchEventPublisher(logEvents,lambdaExecutionContext);
+                    }
                 });
             else
                 return target.apply(thisArg, argumentsList);
