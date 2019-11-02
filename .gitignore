@@ -11,3 +11,4 @@ gh-pages
 .dynamodb
 *~
 .idea
+*.sublime-workspace
