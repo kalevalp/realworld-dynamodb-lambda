@@ -1,6 +1,7 @@
 const recorder = require('watchtower-recorder');
 const eventsStreamName = process.env['WATCHTOWER_EVENT_KINESIS_STREAM'];
 const eventPublisher = recorder.createEventPublisher(eventsStreamName);
+const batchEventPublisher = recorder.createBatchEventPublisher(eventsStreamName);
 
 const Util = require('./Util');
 // Loading modules that fail when required via vm2
@@ -60,11 +61,9 @@ function getDdbdcQueryProxy(underlyingObj) {
             if (argumentsList[0].TableName === commentsTable)
                 return target.apply(thisArg, argumentsList)
                 .on('success', function (response) {
-                    for (const comment of response.data.Items) {
-			eventPublisher({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug,
-									    comment_uuid: comment.id}},
-				       lambdaExecutionContext);
-                    }
+                    const logEvents = response.data.Items.map(comment => ({name: "RETRIEVED_COMMENT", params: {article_slug: comment.slug,
+									                                       comment_uuid: comment.id}}));
+                    batchEventPublisher(logEvents,lambdaExecutionContext);
                 });
             else
                 return target.apply(thisArg, argumentsList);
