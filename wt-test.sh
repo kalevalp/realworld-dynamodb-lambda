@@ -22,14 +22,14 @@ function run {
     serverless remove
 }
 
-export WT_RUN_NO_RECORDING=''
+# export WT_RUN_NO_RECORDING=''
 
-export curr_resdir=${resdir}/no-rec-res
-mkdir ${curr_resdir}
-run &> ${curr_resdir}/run-output
+# export curr_resdir=${resdir}/no-rec-res
+# mkdir ${curr_resdir}
+# run &> ${curr_resdir}/run-output
 
-unset WT_RUN_NO_RECORDING
-unset curr_resdir
+# unset WT_RUN_NO_RECORDING
+# unset curr_resdir
 
 for pcount in $(seq 1 2 9)
 do
