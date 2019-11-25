@@ -1,0 +1,80 @@
+Iteration 1
+scanning..
+scanning..
+(node:5234) UnhandledPromiseRejectionWarning: UnexpectedParameter: Unexpected key 'LastEvaluatedKey' found in params
+    at ParamValidator.fail (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:50:37)
+    at ParamValidator.validateStructure (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:77:14)
+    at ParamValidator.validateMember (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:88:21)
+    at ParamValidator.validate (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:34:10)
+    at Request.VALIDATE_PARAMETERS (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:125:42)
+    at Request.callListeners (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:105:20)
+    at callNextListener (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:95:12)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:85:9
+    at finish (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:320:7)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:338:9
+(node:5234) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+(node:5234) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Iteration 2
+scanning..
+scanning..
+(node:5467) UnhandledPromiseRejectionWarning: UnexpectedParameter: Unexpected key 'LastEvaluatedKey' found in params
+    at ParamValidator.fail (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:50:37)
+    at ParamValidator.validateStructure (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:77:14)
+    at ParamValidator.validateMember (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:88:21)
+    at ParamValidator.validate (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:34:10)
+    at Request.VALIDATE_PARAMETERS (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:125:42)
+    at Request.callListeners (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:105:20)
+    at callNextListener (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:95:12)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:85:9
+    at finish (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:320:7)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:338:9
+(node:5467) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+(node:5467) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Iteration 3
+scanning..
+scanning..
+(node:5683) UnhandledPromiseRejectionWarning: UnexpectedParameter: Unexpected key 'LastEvaluatedKey' found in params
+    at ParamValidator.fail (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:50:37)
+    at ParamValidator.validateStructure (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:77:14)
+    at ParamValidator.validateMember (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:88:21)
+    at ParamValidator.validate (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:34:10)
+    at Request.VALIDATE_PARAMETERS (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:125:42)
+    at Request.callListeners (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:105:20)
+    at callNextListener (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:95:12)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:85:9
+    at finish (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:320:7)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:338:9
+(node:5683) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+(node:5683) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Iteration 4
+scanning..
+scanning..
+(node:5904) UnhandledPromiseRejectionWarning: UnexpectedParameter: Unexpected key 'LastEvaluatedKey' found in params
+    at ParamValidator.fail (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:50:37)
+    at ParamValidator.validateStructure (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:77:14)
+    at ParamValidator.validateMember (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:88:21)
+    at ParamValidator.validate (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:34:10)
+    at Request.VALIDATE_PARAMETERS (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:125:42)
+    at Request.callListeners (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:105:20)
+    at callNextListener (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:95:12)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:85:9
+    at finish (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:320:7)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:338:9
+(node:5904) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+(node:5904) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Iteration 5
+scanning..
+scanning..
+(node:6123) UnhandledPromiseRejectionWarning: UnexpectedParameter: Unexpected key 'LastEvaluatedKey' found in params
+    at ParamValidator.fail (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:50:37)
+    at ParamValidator.validateStructure (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:77:14)
+    at ParamValidator.validateMember (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:88:21)
+    at ParamValidator.validate (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/param_validator.js:34:10)
+    at Request.VALIDATE_PARAMETERS (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:125:42)
+    at Request.callListeners (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:105:20)
+    at callNextListener (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/sequential_executor.js:95:12)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/event_listeners.js:85:9
+    at finish (/home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:320:7)
+    at /home/ubuntu/realworld-dynamodb-lambda/node_modules/aws-sdk/lib/config.js:338:9
+(node:6123) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+(node:6123) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
