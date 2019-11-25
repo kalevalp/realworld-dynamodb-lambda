@@ -348,38 +348,12 @@ stepFunctions:
     checker:
       name: wtCheckerMachine
       definition:
-        Comment: "A Hello World example of the Amazon States Language using an AWS Lambda Function"
-        StartAt: DetermineFlow
+        Comment: "Watchtower property checker state machine."
+        StartAt: WaitToStable
         States:
-          DetermineFlow:
-            Type: Choice
-            Choices:
-              - Variable: $.checkerFlow
-                StringEquals: "runTwice"
-                Next: PreFirstCheckerRun
-              - Variable: $.checkerFlow
-                StringEquals: "runOnce"
-                Next: WaitToStable
-            Default: WaitToStable
-          PreFirstCheckerRun:
-            Type: Pass
-            Result: "initialPhase"
-            ResultPath: $.phase
-            Next: FirstCheckerRun
-          FirstCheckerRun:
-            Type: Task
-            Comment: "First execution of the checker. May result in false positives and false negatives."
-            Resource:
-              Fn::GetAtt: [watchtower-monitor, Arn]
-            Next: WaitToStable
           WaitToStable:
             Type : Wait
             SecondsPath : $.stabilityDelay
-            Next: PreStableCheckerRun
-          PreStableCheckerRun:
-            Type: Pass
-            Result: "stablePhase"
-            ResultPath: $.phase
             Next: StableCheckerRun
           StableCheckerRun:
             Type: Task
@@ -533,26 +507,26 @@ resources:
         TimeToLiveSpecification:
           AttributeName: expiration
           Enabled: true
-    ##
-    ##   Property Instances DynamoDB Table
-    InstancesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-        - AttributeName: propinst
-          AttributeType: S
-        - AttributeName: projinst
-          AttributeType: S
-        KeySchema:
-        - AttributeName: propinst
-          KeyType: HASH
-        - AttributeName: projinst
-          KeyType: RANGE
-        BillingMode: PAY_PER_REQUEST
-        TableName: Watchtower-${self:provider.stage}-PropertyInstances
-        TimeToLiveSpecification:
-          AttributeName: expiration
-          Enabled: true
+    # ##
+    # ##   Property Instances DynamoDB Table
+    # InstancesTable:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     AttributeDefinitions:
+    #     - AttributeName: propinst
+    #       AttributeType: S
+    #     - AttributeName: projinst
+    #       AttributeType: S
+    #     KeySchema:
+    #     - AttributeName: propinst
+    #       KeyType: HASH
+    #     - AttributeName: projinst
+    #       KeyType: RANGE
+    #     BillingMode: PAY_PER_REQUEST
+    #     TableName: Watchtower-${self:provider.stage}-PropertyInstances
+    #     TimeToLiveSpecification:
+    #       AttributeName: expiration
+    #       Enabled: true
     ##
     ##   Instances Checkpoints DynamoDB Table
     CheckpointsTable:
