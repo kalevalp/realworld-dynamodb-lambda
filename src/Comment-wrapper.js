@@ -52,7 +52,7 @@ const queryProxyConditions = [
     },
 ]
 
-const getProxyConditions = [
+const deleteProxyConditions = [
     {
 	cond: (target, thisArg, argumentsList) => argumentsList[0].TableName === commentsTable,
 	opInSucc: (argumentsList) => (response) => {

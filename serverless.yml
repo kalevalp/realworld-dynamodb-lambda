@@ -296,8 +296,8 @@ functions:
         Ref: EventsTable
       WATCHTOWER_INVOCATION_STREAM:
         Ref: InvocationStream
-      WATCHTOWER_PROPERTY_INSTANCE_TABLE:
-        Ref: InstancesTable
+      # WATCHTOWER_PROPERTY_INSTANCE_TABLE:
+      #   Ref: InstancesTable
   ##
   ##   Log Checker
   watchtower-monitor:
@@ -314,8 +314,8 @@ functions:
         Ref: EventsTable
       WATCHTOWER_INVOCATION_STREAM:
         Ref: InvocationStream
-      WATCHTOWER_PROPERTY_INSTANCE_TABLE:
-        Ref: InstancesTable
+      # WATCHTOWER_PROPERTY_INSTANCE_TABLE:
+      #   Ref: InstancesTable
       WATCHTOWER_CHECKPOINT_TABLE:
         Ref: CheckpointsTable
       PROCESSING_LAMBDA_TIMEOUT: 6
@@ -592,32 +592,32 @@ resources:
                  - 'dynamodb:Query'
                  Resource:
                    Fn::GetAtt: [EventsTable, Arn]
-    #
-    #   PropInstance-Writer IAM Role
-    PropInstanceWriterRole:
-      Type: AWS::IAM::Role
-      Properties:
-        Path: /
-        RoleName: ${self:provider.stage}PropInstanceWriterRole
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: Allow
-            Action: sts:AssumeRole
-            Principal:
-              Service: lambda.amazonaws.com
-        ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AdministratorAccess
-        Policies:
-          - PolicyName: BatchWriteToPropInstanceTable
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-              -  Effect: Allow
-                 Action:
-                 - 'dynamodb:BatchWriteItem'
-                 Resource:
-                   Fn::GetAtt: [InstancesTable, Arn]
+    # #
+    # #   PropInstance-Writer IAM Role
+    # PropInstanceWriterRole:
+    #   Type: AWS::IAM::Role
+    #   Properties:
+    #     Path: /
+    #     RoleName: ${self:provider.stage}PropInstanceWriterRole
+    #     AssumeRolePolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #       - Effect: Allow
+    #         Action: sts:AssumeRole
+    #         Principal:
+    #           Service: lambda.amazonaws.com
+    #     ManagedPolicyArns:
+    #     - arn:aws:iam::aws:policy/AdministratorAccess
+    #     Policies:
+    #       - PolicyName: BatchWriteToPropInstanceTable
+    #         PolicyDocument:
+    #           Version: '2012-10-17'
+    #           Statement:
+    #           -  Effect: Allow
+    #              Action:
+    #              - 'dynamodb:BatchWriteItem'
+    #              Resource:
+    #                Fn::GetAtt: [InstancesTable, Arn]
     # ##
     # ## EventPropInstance-Reader IAM Role
     # PropInstanceReaderRole:
