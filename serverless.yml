@@ -55,8 +55,6 @@ functions:
           method: POST
           path: /api/users
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
 
   loginUser:
@@ -66,8 +64,6 @@ functions:
           method: POST
           path: /api/users/login
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
 
   getUser:
@@ -77,8 +73,6 @@ functions:
           method: GET
           path: /api/user
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
 
   updateUser:
@@ -88,8 +82,6 @@ functions:
           method: PUT
           path: /api/user
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
 
   getProfile:
@@ -99,8 +91,6 @@ functions:
           method: GET
           path: /api/profiles/{username}
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   followUser:
     handler: src/User${self:custom.handlerFilePostfix}.follow
@@ -109,8 +99,6 @@ functions:
           method: POST
           path: /api/profiles/{username}/follow
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   unfollowUser:
     handler: src/User${self:custom.handlerFilePostfix}.follow
@@ -119,8 +107,6 @@ functions:
           method: DELETE
           path: /api/profiles/{username}/follow
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   ## Articles API
   createArticle:
@@ -130,8 +116,6 @@ functions:
           method: POST
           path: /api/articles
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   getArticle:
     handler: src/Article${self:custom.handlerFilePostfix}.get
@@ -140,8 +124,6 @@ functions:
           method: GET
           path: /api/articles/{slug}
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   udpateArticle:
     handler: src/Article${self:custom.handlerFilePostfix}.update
@@ -150,8 +132,6 @@ functions:
           method: PUT
           path: /api/articles/{slug}
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   deleteArticle:
     handler: src/Article${self:custom.handlerFilePostfix}.delete
@@ -160,8 +140,6 @@ functions:
           method: DELETE
           path: /api/articles/{slug}
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   favoriteArticle:
     handler: src/Article${self:custom.handlerFilePostfix}.favorite
@@ -170,8 +148,6 @@ functions:
           method: POST
           path: /api/articles/{slug}/favorite
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   unfavoriteArticle:
     handler: src/Article${self:custom.handlerFilePostfix}.favorite
@@ -180,8 +156,6 @@ functions:
           method: DELETE
           path: /api/articles/{slug}/favorite
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   listArticles:
     handler: src/Article${self:custom.handlerFilePostfix}.list
@@ -190,8 +164,6 @@ functions:
           method: GET
           path: /api/articles
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   getArticlesFeed:
     handler: src/Article${self:custom.handlerFilePostfix}.getFeed
@@ -200,8 +172,6 @@ functions:
           method: GET
           path: /api/articles/feed
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   getTags:
     handler: src/Article${self:custom.handlerFilePostfix}.getTags
@@ -210,8 +180,6 @@ functions:
           method: GET
           path: /api/tags
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   ## Comments API
   createComment:
@@ -221,8 +189,6 @@ functions:
           method: POST
           path: /api/articles/{slug}/comments
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   getComments:
     handler: src/Comment${self:custom.handlerFilePostfix}.get
@@ -231,8 +197,6 @@ functions:
           method: GET
           path: /api/articles/{slug}/comments
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   deleteComment:
     handler: src/Comment${self:custom.handlerFilePostfix}.delete
@@ -241,8 +205,6 @@ functions:
           method: DELETE
           path: /api/articles/{slug}/comments/{id}
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   ## Utils API
   ping:
@@ -252,15 +214,11 @@ functions:
           method: GET
           path: /api/ping
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   purgeData:
     handler: src/Util${self:custom.handlerFilePostfix}.purgeData
     events:
       - http: DELETE /api/__TESTUTILS__/purge
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   ## GDPR Consent API
   consent:
@@ -270,8 +228,6 @@ functions:
           method: POST
           path: /api/consent
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   revoke:
     handler: src/GDPR${self:custom.handlerFilePostfix}.revoke
@@ -280,8 +236,6 @@ functions:
           method: DELETE
           path: /api/consent
           cors: true
-    role:
-      'Fn::GetAtt': [ EventsStreamWriter, Arn ]
 
   ########################################
   ## Watchtower Functions
