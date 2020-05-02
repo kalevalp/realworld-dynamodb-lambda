@@ -287,9 +287,9 @@ functions:
   ## Watchtower Functions
   ##
   ##   Log Ingestion
-  watchtower-ingestion: ${file(watchtower/functions.yml):watchtower-ingestion}   # Event ingestion function
-  watchtower-monitor:   ${file(watchtower/functions.yml):watchtower-monitor}     # Event monitor
-  wt-monitor-trigger:   ${file(watchtower/functions.yml):wt-monitor-trigger}     # A function that triggers the event monitoring step-functions state machine
+  watchtower-ingestion: ${file(src/watchtower/functions.yml):watchtower-ingestion}   # Event ingestion function
+  watchtower-monitor:   ${file(src/watchtower/functions.yml):watchtower-monitor}     # Event monitor
+  wt-monitor-trigger:   ${file(src/watchtower/functions.yml):wt-monitor-trigger}     # A function that triggers the event monitoring step-functions state machine
 
 
 
@@ -299,7 +299,7 @@ functions:
 
 stepFunctions:
   stateMachines:
-    checker: ${file(watchtower/stateMachine.yml):stateMachines.checker}
+    checker: ${file(src/watchtower/stateMachine.yml):stateMachines.checker}
 
   ##
   ## End of Watchtower Checker State Machine
@@ -308,9 +308,9 @@ stepFunctions:
 
 resources:
   Outputs:
-    WTCheckerMachine: ${file(watchtower/outputs.yml):Outputs.WTCheckerMachine}
-    WTEventsKinesisStream: ${file(watchtower/outputs.yml):Outputs.WTEventsKinesisStream}
-    WTEventsKinesisStreamARN: ${file(watchtower/outputs.yml):Outputs.WTEventsKinesisStreamARN}
+    WTCheckerMachine: ${file(src/watchtower/outputs.yml):Outputs.WTCheckerMachine}
+    WTEventsKinesisStream: ${file(src/watchtower/outputs.yml):Outputs.WTEventsKinesisStream}
+    WTEventsKinesisStreamARN: ${file(src/watchtower/outputs.yml):Outputs.WTEventsKinesisStreamARN}
 
   Resources:
     UsersDynamoDBTable:
@@ -415,13 +415,13 @@ resources:
     ## Watchtower Resources
     ##
 
-    EventsTable:          ${file(watchtower/ddbTables.yml):Resources.EventsTable}
-    CheckpointsTable:     ${file(watchtower/ddbTables.yml):Resources.CheckpointsTable}
-    InvocationStream:     ${file(watchtower/kinesisStreams.yml):Resources.InvocationStream}
-    EventsStream:         ${file(watchtower/kinesisStreams.yml):Resources.EventsStream}
-    EventWriterRole:      ${file(watchtower/iamRoles.yml):Resources.EventWriterRole}
-    EventReaderRole:      ${file(watchtower/iamRoles.yml):Resources.EventReaderRole}
-    StateMachineListExec: ${file(watchtower/iamRoles.yml):Resources.StateMachineListExec}
+    EventsTable:          ${file(src/watchtower/ddbTables.yml):Resources.EventsTable}
+    CheckpointsTable:     ${file(src/watchtower/ddbTables.yml):Resources.CheckpointsTable}
+    InvocationStream:     ${file(src/watchtower/kinesisStreams.yml):Resources.InvocationStream}
+    EventsStream:         ${file(src/watchtower/kinesisStreams.yml):Resources.EventsStream}
+    EventWriterRole:      ${file(src/watchtower/iamRoles.yml):Resources.EventWriterRole}
+    EventReaderRole:      ${file(src/watchtower/iamRoles.yml):Resources.EventReaderRole}
+    StateMachineListExec: ${file(src/watchtower/iamRoles.yml):Resources.StateMachineListExec}
 
     ##
     ## END of Watchtower Resources
