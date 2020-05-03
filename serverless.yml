@@ -32,6 +32,7 @@ provider:
 custom:
   # handlerFilePostfix: '-wrapper'
   handlerFilePostfix: ${env:WT_RUN_NO_RECORDING, '-wrapper'}
+  wtFuncPathPrefix: "src/"
 
 package:
   exclude:
