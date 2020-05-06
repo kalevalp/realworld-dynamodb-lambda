@@ -5,11 +5,11 @@ mkdir ${resdir}
 
 function run {
     serverless deploy
-    sleep 10
-    serverless deploy
-    sleep 10
-    serverless deploy
-    sleep 30
+    # sleep 10
+    # serverless deploy
+    # sleep 10
+    # serverless deploy
+    sleep 60
 
     for j in $(seq 1 5)
     do
@@ -22,7 +22,7 @@ function run {
 	node analyze-ddb-use.js &>> ${curr_resdir}/ddb-usage
     done
 
-    # node get-wt-times.js ${curr_resdir}/
+    node get-wt-times.js ${curr_resdir}/
 
     serverless remove
 }
