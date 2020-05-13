@@ -16,13 +16,15 @@ function run {
 	for i in $(seq 1 5)
 	do
 	    npm run test:deployed
-	    sleep 5
+	    sleep 10
 	done
 	echo Iteration ${j} &>> ${curr_resdir}/ddb-usage
 	node wt-scripts/analyze-ddb-use.js &>> ${curr_resdir}/ddb-usage
     done
 
     node wt-scripts/get-wt-times.js ${curr_resdir}/
+
+    sleep 60
 
     serverless remove
 }
