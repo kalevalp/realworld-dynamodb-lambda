@@ -1,0 +1,450 @@
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [https://26b6t5wj9c.execute-api.eu-west-1.amazonaws.com/dev/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  2252
+**** Call ## 1 ## Duration:  130
+**** Call ## 2 ## Duration:  119
+    Create
+**** Call ## 3 ## Duration:  840
+      ✓ should create article (842ms)
+**** Call ## 4 ## Duration:  83
+      ✓ should create article with tags (86ms)
+**** Call ## 5 ## Duration:  23 (ERR)
+      ✓ should disallow unauthenticated user
+**** Call ## 6 ## Duration:  73 (ERR)
+**** Call ## 7 ## Duration:  53 (ERR)
+**** Call ## 8 ## Duration:  61 (ERR)
+**** Call ## 9 ## Duration:  58 (ERR)
+      ✓ should enforce required fields (249ms)
+    Get
+**** Call ## 10 ## Duration:  1009
+      ✓ should get article by slug (1010ms)
+**** Call ## 11 ## Duration:  88
+      ✓ should get article with tags by slug (88ms)
+**** Call ## 12 ## Duration:  69 (ERR)
+      ✓ should disallow unknown slug (69ms)
+    Update
+**** Call ## 13 ## Duration:  1182
+**** Call ## 14 ## Duration:  107
+**** Call ## 15 ## Duration:  144
+      ✓ should update article (1434ms)
+**** Call ## 16 ## Duration:  23 (ERR)
+      ✓ should disallow missing mutation
+**** Call ## 17 ## Duration:  26 (ERR)
+      ✓ should disallow empty mutation
+**** Call ## 18 ## Duration:  23 (ERR)
+      ✓ should disallow unauthenticated update
+**** Call ## 19 ## Duration:  54 (ERR)
+      ✓ should disallow updating non-existent article (54ms)
+**** Call ## 20 ## Duration:  68 (ERR)
+      ✓ should disallow non-author from updating (68ms)
+    Favorite
+**** Call ## 21 ## Duration:  1489
+**** Call ## 22 ## Duration:  120
+      ✓ should favorite article (1609ms)
+**** Call ## 23 ## Duration:  23 (ERR)
+      ✓ should disallow favoriting by unauthenticated user
+**** Call ## 24 ## Duration:  71 (ERR)
+      ✓ should disallow favoriting unknown article (71ms)
+**** Call ## 25 ## Duration:  1210
+      ✓ should unfavorite article (1210ms)
+    Delete
+**** Call ## 26 ## Duration:  1119
+**** Call ## 27 ## Duration:  41 (ERR)
+      ✓ should delete article (1160ms)
+**** Call ## 28 ## Duration:  24 (ERR)
+      ✓ should disallow deleting by unauthenticated user
+**** Call ## 29 ## Duration:  61 (ERR)
+      ✓ should disallow deleting unknown article (61ms)
+**** Call ## 30 ## Duration:  66 (ERR)
+      ✓ should disallow deleting article by non-author (66ms)
+    List
+**** Call ## 31 ## Duration:  97
+**** Call ## 32 ## Duration:  85
+**** Call ## 33 ## Duration:  84
+**** Call ## 34 ## Duration:  121
+**** Call ## 35 ## Duration:  81
+**** Call ## 36 ## Duration:  81
+**** Call ## 37 ## Duration:  86
+**** Call ## 38 ## Duration:  69
+**** Call ## 39 ## Duration:  84
+**** Call ## 40 ## Duration:  110
+**** Call ## 41 ## Duration:  85
+**** Call ## 42 ## Duration:  137
+**** Call ## 43 ## Duration:  95
+**** Call ## 44 ## Duration:  74
+**** Call ## 45 ## Duration:  66
+**** Call ## 46 ## Duration:  85
+**** Call ## 47 ## Duration:  62
+**** Call ## 48 ## Duration:  73
+**** Call ## 49 ## Duration:  82
+**** Call ## 50 ## Duration:  74
+**** Call ## 51 ## Duration:  1614
+      ✓ should list articles (1614ms)
+**** Call ## 52 ## Duration:  365
+**** Call ## 53 ## Duration:  431
+      ✓ should list articles with tag (796ms)
+**** Call ## 54 ## Duration:  255
+      ✓ should list articles by author (255ms)
+**** Call ## 55 ## Duration:  111
+      ✓ should list articles favorited by user (112ms)
+**** Call ## 56 ## Duration:  137
+**** Call ## 57 ## Duration:  76
+      ✓ should list articles by limit/offset (213ms)
+**** Call ## 58 ## Duration:  478
+      ✓ should list articles when authenticated (478ms)
+      ✓ should disallow multiple of author/tag/favorited
+    Feed
+**** Call ## 61 ## Duration:  32 (ERR)
+**** Call ## 59 ## Duration:  33 (ERR)
+**** Call ## 60 ## Duration:  40 (ERR)
+**** Call ## 62 ## Duration:  1208
+**** Call ## 63 ## Duration:  1273
+**** Call ## 64 ## Duration:  297
+**** Call ## 65 ## Duration:  108
+**** Call ## 66 ## Duration:  394
+      ✓ should get feed (3283ms)
+**** Call ## 67 ## Duration:  23 (ERR)
+      ✓ should disallow unauthenticated feed
+    Tags
+**** Call ## 68 ## Duration:  1176
+      ✓ should get tags (1176ms)
+
+  Comment
+**** Call ## 69 ## Duration:  164
+**** Call ## 70 ## Duration:  100
+**** Call ## 71 ## Duration:  89
+    Create
+**** Call ## 72 ## Duration:  1107
+**** Call ## 73 ## Duration:  102
+**** Call ## 74 ## Duration:  88
+**** Call ## 75 ## Duration:  122
+**** Call ## 76 ## Duration:  105
+**** Call ## 77 ## Duration:  86
+**** Call ## 78 ## Duration:  105
+**** Call ## 79 ## Duration:  107
+**** Call ## 80 ## Duration:  107
+**** Call ## 81 ## Duration:  83
+      ✓ should create comment (2029ms)
+**** Call ## 82 ## Duration:  57 (ERR)
+      ✓ should disallow unauthenticated user (58ms)
+**** Call ## 83 ## Duration:  37 (ERR)
+      ✓ should enforce comment body
+**** Call ## 84 ## Duration:  57 (ERR)
+      ✓ should disallow non-existent article (57ms)
+    Get
+**** Call ## 85 ## Duration:  1102
+      ✓ should get all comments for article (1102ms)
+    Delete
+**** Call ## 86 ## Duration:  1047
+      ✓ should delete comment (1047ms)
+**** Call ## 87 ## Duration:  57 (ERR)
+      ✓ only comment author should be able to delete comment (58ms)
+**** Call ## 88 ## Duration:  25 (ERR)
+      ✓ should disallow unauthenticated user
+**** Call ## 89 ## Duration:  49 (ERR)
+      ✓ should disallow deleting unknown comment (49ms)
+
+  User
+    Create
+**** Call ## 90 ## Duration:  147
+      ✓ should create user (147ms)
+**** Call ## 91 ## Duration:  85 (ERR)
+      ✓ should disallow same username (86ms)
+**** Call ## 92 ## Duration:  59 (ERR)
+      ✓ should disallow same email (59ms)
+**** Call ## 93 ## Duration:  24 (ERR)
+**** Call ## 94 ## Duration:  25 (ERR)
+**** Call ## 95 ## Duration:  21 (ERR)
+**** Call ## 96 ## Duration:  24 (ERR)
+      ✓ should enforce required fields (95ms)
+    Login
+**** Call ## 97 ## Duration:  1174
+      ✓ should login (1174ms)
+**** Call ## 98 ## Duration:  41 (ERR)
+      ✓ should disallow unknown email (41ms)
+**** Call ## 99 ## Duration:  41 (ERR)
+      ✓ should disallow wrong password (42ms)
+**** Call ## 100 ## Duration:  28 (ERR)
+**** Call ## 101 ## Duration:  25 (ERR)
+**** Call ## 102 ## Duration:  32 (ERR)
+      ✓ should enforce required fields (85ms)
+    Get
+**** Call ## 103 ## Duration:  1048
+      ✓ should get current user (1048ms)
+**** Call ## 104 ## Duration:  20 (ERR)
+**** Call ## 105 ## Duration:  40 (ERR)
+**** Call ## 106 ## Duration:  821 (ERR)
+**** Call ## 107 ## Duration:  26 (ERR)
+      ✓ should disallow bad tokens (910ms)
+    Profile
+**** Call ## 108 ## Duration:  951
+      ✓ should get profile (951ms)
+**** Call ## 109 ## Duration:  50 (ERR)
+      ✓ should disallow unknown username (50ms)
+**** Call ## 110 ## Duration:  99
+**** Call ## 111 ## Duration:  113
+**** Call ## 112 ## Duration:  89
+**** Call ## 113 ## Duration:  66
+**** Call ## 114 ## Duration:  66
+**** Call ## 115 ## Duration:  121
+**** Call ## 116 ## Duration:  97
+**** Call ## 117 ## Duration:  1091
+**** Call ## 118 ## Duration:  86
+**** Call ## 119 ## Duration:  177
+      ✓ should follow/unfollow user (2009ms)
+**** Call ## 120 ## Duration:  28 (ERR)
+      ✓ should disallow following with bad token
+    Update
+**** Call ## 121 ## Duration:  1453
+**** Call ## 122 ## Duration:  107
+**** Call ## 123 ## Duration:  57
+**** Call ## 124 ## Duration:  70
+      ✓ should update user (1689ms)
+**** Call ## 125 ## Duration:  27 (ERR)
+**** Call ## 126 ## Duration:  39 (ERR)
+      ✓ should disallow missing token/email in update (67ms)
+**** Call ## 127 ## Duration:  124
+**** Call ## 128 ## Duration:  38 (ERR)
+      ✓ should disallow reusing email (163ms)
+
+  Util
+    Ping
+**** Call ## 129 ## Duration:  686
+      ✓ should ping (687ms)
+
+
+  58 passing (35s)
+
+
+> realworld-dynamodb-lambda@1.0.0 test:deployed /home/ubuntu/realworld-dynamodb-lambda
+> API_URL=`serverless info --verbose | grep '^ServiceEndpoint:' | grep -o 'https://.*'`; API_URL=$API_URL/api mocha
+
+
+
+Testing API_URL: [https://26b6t5wj9c.execute-api.eu-west-1.amazonaws.com/dev/api]
+Done!
+
+  Article
+**** Call ## 0 ## Duration:  202
+**** Call ## 1 ## Duration:  119
+**** Call ## 2 ## Duration:  93
+    Create
+**** Call ## 3 ## Duration:  168
+      ✓ should create article (172ms)
+**** Call ## 4 ## Duration:  110
+      ✓ should create article with tags (113ms)
+**** Call ## 5 ## Duration:  40 (ERR)
+      ✓ should disallow unauthenticated user (40ms)
+**** Call ## 6 ## Duration:  122 (ERR)
+**** Call ## 7 ## Duration:  64 (ERR)
+**** Call ## 8 ## Duration:  72 (ERR)
+**** Call ## 9 ## Duration:  65 (ERR)
+      ✓ should enforce required fields (325ms)
+    Get
+**** Call ## 10 ## Duration:  126
+      ✓ should get article by slug (126ms)
+**** Call ## 11 ## Duration:  74
+      ✓ should get article with tags by slug (74ms)
+**** Call ## 12 ## Duration:  56 (ERR)
+      ✓ should disallow unknown slug (56ms)
+    Update
+**** Call ## 13 ## Duration:  196
+**** Call ## 14 ## Duration:  132
+**** Call ## 15 ## Duration:  141
+      ✓ should update article (471ms)
+**** Call ## 16 ## Duration:  27 (ERR)
+      ✓ should disallow missing mutation
+**** Call ## 17 ## Duration:  29 (ERR)
+      ✓ should disallow empty mutation
+**** Call ## 18 ## Duration:  27 (ERR)
+      ✓ should disallow unauthenticated update
+**** Call ## 19 ## Duration:  63 (ERR)
+      ✓ should disallow updating non-existent article (63ms)
+**** Call ## 20 ## Duration:  56 (ERR)
+      ✓ should disallow non-author from updating (56ms)
+    Favorite
+**** Call ## 21 ## Duration:  194
+**** Call ## 22 ## Duration:  169
+      ✓ should favorite article (363ms)
+**** Call ## 23 ## Duration:  27 (ERR)
+      ✓ should disallow favoriting by unauthenticated user
+**** Call ## 24 ## Duration:  55 (ERR)
+      ✓ should disallow favoriting unknown article (55ms)
+**** Call ## 25 ## Duration:  191
+      ✓ should unfavorite article (191ms)
+    Delete
+**** Call ## 26 ## Duration:  161
+**** Call ## 27 ## Duration:  45 (ERR)
+      ✓ should delete article (206ms)
+**** Call ## 28 ## Duration:  21 (ERR)
+      ✓ should disallow deleting by unauthenticated user
+**** Call ## 29 ## Duration:  71 (ERR)
+      ✓ should disallow deleting unknown article (71ms)
+**** Call ## 30 ## Duration:  115 (ERR)
+      ✓ should disallow deleting article by non-author (116ms)
+    List
+**** Call ## 31 ## Duration:  149
+**** Call ## 32 ## Duration:  78
+**** Call ## 33 ## Duration:  85
+**** Call ## 34 ## Duration:  97
+**** Call ## 35 ## Duration:  108
+**** Call ## 36 ## Duration:  80
+**** Call ## 37 ## Duration:  100
+**** Call ## 38 ## Duration:  73
+**** Call ## 39 ## Duration:  77
+**** Call ## 40 ## Duration:  106
+**** Call ## 41 ## Duration:  61
+**** Call ## 42 ## Duration:  74
+**** Call ## 43 ## Duration:  70
+**** Call ## 44 ## Duration:  80
+**** Call ## 45 ## Duration:  67
+**** Call ## 46 ## Duration:  66
+**** Call ## 47 ## Duration:  80
+**** Call ## 48 ## Duration:  82
+**** Call ## 49 ## Duration:  94
+**** Call ## 50 ## Duration:  78
+**** Call ## 51 ## Duration:  521
+      ✓ should list articles (521ms)
+**** Call ## 52 ## Duration:  492
+**** Call ## 53 ## Duration:  406
+      ✓ should list articles with tag (899ms)
+**** Call ## 54 ## Duration:  237
+      ✓ should list articles by author (238ms)
+**** Call ## 55 ## Duration:  90
+      ✓ should list articles favorited by user (90ms)
+**** Call ## 56 ## Duration:  134
+**** Call ## 57 ## Duration:  86
+      ✓ should list articles by limit/offset (220ms)
+**** Call ## 58 ## Duration:  596
+      ✓ should list articles when authenticated (597ms)
+      ✓ should disallow multiple of author/tag/favorited
+    Feed
+**** Call ## 60 ## Duration:  26 (ERR)
+**** Call ## 61 ## Duration:  29 (ERR)
+**** Call ## 59 ## Duration:  36 (ERR)
+**** Call ## 62 ## Duration:  71
+**** Call ## 63 ## Duration:  182
+**** Call ## 64 ## Duration:  356
+**** Call ## 65 ## Duration:  115
+**** Call ## 66 ## Duration:  382
+      ✓ should get feed (1109ms)
+**** Call ## 67 ## Duration:  23 (ERR)
+      ✓ should disallow unauthenticated feed
+    Tags
+**** Call ## 68 ## Duration:  265
+      ✓ should get tags (265ms)
+
+  Comment
+**** Call ## 69 ## Duration:  87
+**** Call ## 70 ## Duration:  95
+**** Call ## 71 ## Duration:  77
+    Create
+**** Call ## 72 ## Duration:  176
+**** Call ## 73 ## Duration:  100
+**** Call ## 74 ## Duration:  90
+**** Call ## 75 ## Duration:  75
+**** Call ## 76 ## Duration:  103
+**** Call ## 77 ## Duration:  91
+**** Call ## 78 ## Duration:  100
+**** Call ## 79 ## Duration:  93
+**** Call ## 80 ## Duration:  91
+**** Call ## 81 ## Duration:  85
+      ✓ should create comment (1006ms)
+**** Call ## 82 ## Duration:  26 (ERR)
+      ✓ should disallow unauthenticated user
+**** Call ## 83 ## Duration:  36 (ERR)
+      ✓ should enforce comment body
+**** Call ## 84 ## Duration:  74 (ERR)
+      ✓ should disallow non-existent article (74ms)
+    Get
+**** Call ## 85 ## Duration:  200
+      ✓ should get all comments for article (203ms)
+    Delete
+**** Call ## 86 ## Duration:  96
+      ✓ should delete comment (96ms)
+**** Call ## 87 ## Duration:  52 (ERR)
+      ✓ only comment author should be able to delete comment (52ms)
+**** Call ## 88 ## Duration:  21 (ERR)
+      ✓ should disallow unauthenticated user
+**** Call ## 89 ## Duration:  38 (ERR)
+      ✓ should disallow deleting unknown comment (39ms)
+
+  User
+    Create
+**** Call ## 90 ## Duration:  90
+      ✓ should create user (90ms)
+**** Call ## 91 ## Duration:  38 (ERR)
+      ✓ should disallow same username (38ms)
+**** Call ## 92 ## Duration:  65 (ERR)
+      ✓ should disallow same email (65ms)
+**** Call ## 93 ## Duration:  40 (ERR)
+**** Call ## 94 ## Duration:  27 (ERR)
+**** Call ## 95 ## Duration:  22 (ERR)
+**** Call ## 96 ## Duration:  24 (ERR)
+      ✓ should enforce required fields (115ms)
+    Login
+**** Call ## 97 ## Duration:  134
+      ✓ should login (134ms)
+**** Call ## 98 ## Duration:  41 (ERR)
+      ✓ should disallow unknown email (42ms)
+**** Call ## 99 ## Duration:  40 (ERR)
+      ✓ should disallow wrong password (41ms)
+**** Call ## 100 ## Duration:  36 (ERR)
+**** Call ## 101 ## Duration:  23 (ERR)
+**** Call ## 102 ## Duration:  21 (ERR)
+      ✓ should enforce required fields (80ms)
+    Get
+**** Call ## 103 ## Duration:  126
+      ✓ should get current user (126ms)
+**** Call ## 104 ## Duration:  24 (ERR)
+**** Call ## 105 ## Duration:  30 (ERR)
+**** Call ## 106 ## Duration:  26 (ERR)
+**** Call ## 107 ## Duration:  20 (ERR)
+      ✓ should disallow bad tokens (101ms)
+    Profile
+**** Call ## 108 ## Duration:  111
+      ✓ should get profile (112ms)
+**** Call ## 109 ## Duration:  37 (ERR)
+      ✓ should disallow unknown username (39ms)
+**** Call ## 110 ## Duration:  97
+**** Call ## 111 ## Duration:  140
+**** Call ## 112 ## Duration:  96
+**** Call ## 113 ## Duration:  85
+**** Call ## 114 ## Duration:  59
+**** Call ## 115 ## Duration:  105
+**** Call ## 116 ## Duration:  114
+**** Call ## 117 ## Duration:  179
+**** Call ## 118 ## Duration:  99
+**** Call ## 119 ## Duration:  83
+      ✓ should follow/unfollow user (1059ms)
+**** Call ## 120 ## Duration:  22 (ERR)
+      ✓ should disallow following with bad token
+    Update
+**** Call ## 121 ## Duration:  158
+**** Call ## 122 ## Duration:  58
+**** Call ## 123 ## Duration:  61
+**** Call ## 124 ## Duration:  50
+      ✓ should update user (327ms)
+**** Call ## 125 ## Duration:  21 (ERR)
+**** Call ## 126 ## Duration:  98 (ERR)
+      ✓ should disallow missing token/email in update (119ms)
+**** Call ## 127 ## Duration:  193
+**** Call ## 128 ## Duration:  55 (ERR)
+      ✓ should disallow reusing email (248ms)
+
+  Util
+    Ping
+**** Call ## 129 ## Duration:  19
+      ✓ should ping
+
+
+  58 passing (13s)
+
