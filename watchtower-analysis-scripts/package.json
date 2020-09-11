@@ -1,0 +1,14 @@
+{
+  "name": "watchtower-analysis-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "interleavings-report.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cloudwatch-log-scraper": "^1.2.2"
+  }
+}
