@@ -10,10 +10,11 @@ function getRandFname() {
 
 async function main() {
 
-    const filterExp = '?"@@@@WT_PROF: TOTAL CHECKED PATHS" ?"@@@@WT_PROF: MAXIMUM WIDTH"';
+    const filterExp = '?"@@@@WT_PROF: TOTAL CHECKED PATHS" ?"@@@@WT_PROF: MAXIMUM WIDTH" ? "@@@@WT_PROF: AVERAGE WIDTH"';
 
-    const totalPathsRE = /@@@@WT_PROF: TOTAL CHECKED PATHS: (.*)/;
-    const maxWidthRE = /@@@@WT_PROF: MAXIMUM WIDTH: (.*)/;
+    const totalPathsRE = /@@@@WT_PROF: TOTAL CHECKED PATHS: --(.*)--/;
+    const maxWidthRE = /@@@@WT_PROF: MAXIMUM WIDTH: --(.*)--/;
+    const avgWidthRE = /@@@@WT_PROF: AVERAGE WIDTH: --(.*)--/;
 
     const logGroup = '/aws/lambda/realworld-dev-watchtower-monitor';
     const logItems = await scraper.getAllLogItemsForGroupMatching(logGroup, filterExp);
@@ -27,28 +28,12 @@ async function main() {
 
 
 
-    const width = logItems.filter(item => item.message.match(maxWidthRE)).map(item => Number(item.message.match(maxWidthRE)[1]));
-    console.log(`Average maximum number of concurrent interleavings checked: ${width.reduce((acc, curr) => acc + curr, 0) / width.length}`);
+    const maxWidth = logItems.filter(item => item.message.match(maxWidthRE)).map(item => Number(item.message.match(maxWidthRE)[1]));
+    console.log(`Average maximum number of concurrent interleavings checked: ${maxWidth.reduce((acc, curr) => acc + curr, 0) / maxWidth.length}`);
 
-    // console.log(width);
+    const avgWidth = logItems.filter(item => item.message.match(avgWidthRE)).map(item => Number(item.message.match(avgWidthRE)[1]));
+    console.log(`Average maximum number of concurrent interleavings checked: ${avgWidth.reduce((acc, curr) => acc + curr, 0) / avgWidth.length}`);
 
-    // const fullReports = reports.map(rep =>
-    //                                 [rep.eventOccuredTimestamp - rep.eventOccuredTimestamp,
-    //                                  rep.eventKinesisArrivedTimestamp - rep.eventOccuredTimestamp,
-    //                                  rep.ingestionFunctionStartTime - rep.eventOccuredTimestamp,
-    //                                  rep.ddbWriteTime - rep.eventOccuredTimestamp,
-    //                                  rep.instanceTriggerKinesisTime - rep.eventOccuredTimestamp,
-    //                                  rep.checkerFunctionInvokeTime - rep.eventOccuredTimestamp,
-    //                                  rep.violationDetectionTime - rep.eventOccuredTimestamp]
-    //                                );
-
-    // let outputfname = getRandFname();
-
-    // if (process.argv[2]) {
-    //     outputfname = process.argv[2];
-    // }
-
-    // fs.writeFileSync(outputfname, JSON.stringify(fullReports));
 }
 
 main();
