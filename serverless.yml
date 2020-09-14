@@ -43,6 +43,11 @@ package:
     - .dynamodb/**
     - test-results/**
     - results*/**
+    - start-server.sh
+    - stop-server.sh
+    - test-api-local.sh
+    - watchtower-analysis-scripts/**
+    - wt-scripts/**
 
 plugins:
   - serverless-dynamodb-local
